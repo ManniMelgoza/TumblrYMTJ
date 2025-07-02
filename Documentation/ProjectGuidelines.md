@@ -1,4 +1,4 @@
-Tumblr
+## Tumblr
 
 Determine whether you want to work on features together, one at a time, or have pairs work on features together, or if everyone in the group gets their own feature.
 Be smart about your Git workflow. Create branches, commit to them, then create Pull Requests on GitHub to let others see your changes.
@@ -15,7 +15,7 @@ Be smart about your Git workflow. Create branches, commit to them, then create P
         * Create button when logged in so the id can be tied to that users post. The new post should be added to the database and reflected to all the post page
     * Users should be able to update their posts.
         * Get the id of the specific user post that should be updated.
-        * Should form be prefilled to update data?
+        * Should the form be prefilled to update data?
     * Users should be able to delete their posts.
         * Select post that needs to be updated by id
         * When deleting it should cascade to delete everywhere in the site
