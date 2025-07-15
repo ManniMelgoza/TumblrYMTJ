@@ -21,7 +21,7 @@ def all_posts():
 # TODO NEED TO ADD BODY VALIDATOR ERRO MSGs
 # CREATE A NEW POST
 # if we had a url predix url/post/username/create
-@post_routes.route("/<string:username>/create", methods=['GET','POST'])
+@post_routes.route("/<string:username>/create", methods=['POST'])
 @login_required
 def create_post():
 
@@ -29,11 +29,11 @@ def create_post():
 
     if form.validate_on_submit():
         new_post = Post(
-            # TODO need to add id 
+            # TODO need to add id
             # "id": len()
             post_title=form.data["post_title"],
             post_body=form.data["post_body"],
-            post_img_url=form.data["post_img_url"],
+            post_img_url=form.data["post_img_url"]
         )
         db.session.add(new_post)
         db.session.commit()
@@ -62,7 +62,7 @@ def edit_post(username, post_id):
 
         post_edit.post_title=form.data["post_title"],
         post_edit.post_body=form.data["post_body"],
-        post_edit.post_img_url=form.data["post_img_url"],
+        post_edit.post_img_url=form.data["post_img_url"]
 
         db.session.add()
         db.session.commit()
@@ -71,13 +71,13 @@ def edit_post(username, post_id):
 
 @post_routes.route('/<string:username>/<int:post_id>', methods=["DELETE"])
 @login_required
-def delete_post(post_id):
+def delete_post(username, post_id):
 
     post_delete = Post.query.get(post_id)
 
     if not post_delete:
-        return {"Message": "Your post was successfully deleted"}, 200
+        return {"Message": "Your post was not found, unable to DELETE"}, 404
 
     db.session.delete(post_delete)
-    db.commit()
-    return {"Message": "Your post was successfully deleted"}, 404
+    db.session.commit()
+    return {"Message": "Your post was successfully deleted"}, 200
