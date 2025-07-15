@@ -1,6 +1,7 @@
 # Order matters as to what data needs to feed out of one another. Post would be first since that will feed to the rest of the items
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
+from .posts import seed_posts, undo_posts
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,7 +20,9 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_users()
+        undo_posts()
     seed_users()
+    seed_posts()
     # Add other seed functions here
     # We would had seed_post() here
 
@@ -27,5 +30,6 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
+    undo_posts()
     # Add other undo functions here
     # We would had undo_post() here
