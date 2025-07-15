@@ -29,6 +29,7 @@ def create_post():
 
     if form.validate_on_submit():
         new_post = Post(
+            # TODO need to add id 
             # "id": len()
             post_title=form.data["post_title"],
             post_body=form.data["post_body"],
@@ -41,9 +42,9 @@ def create_post():
     return form.errors, 400
 
 # EDIT A POST
-@post_routes.route("/<string:username>/<int:post_id>/edit", methods={"GET", "POST"})
+@post_routes.route("/<string:username>/<int:post_id>/edit", methods=["PUT"])
 @login_required
-def edit_post(post_id):
+def edit_post(username, post_id):
 
     post_edit = Post.query.get(post_id)
 
