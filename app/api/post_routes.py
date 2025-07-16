@@ -21,7 +21,7 @@ def all_posts():
 # TODO NEED TO ADD BODY VALIDATOR ERRO MSGs
 # CREATE A NEW POST
 # if we had a url predix url/post/username/create
-@post_routes.route("/<string:username>/create", methods=['POST'])
+@post_routes.route("/create", methods=['POST'])
 @login_required
 def create_post():
 
@@ -42,11 +42,12 @@ def create_post():
     return form.errors, 400
 
 # EDIT A POST
-@post_routes.route("/<string:username>/<int:post_id>/edit", methods=["PUT"])
+@post_routes.route("/<int:post_id>/edit", methods=["PUT"])
 @login_required
-def edit_post(username, post_id):
-
+def edit_post(post_id):
+    # return 'HI'
     post_edit = Post.query.get(post_id)
+    # print("GETTING DATA", post_edit.to_dict())
 
     if not post_edit:
         return {'Message': "This post most probably does not exist"}, 404
@@ -54,24 +55,27 @@ def edit_post(username, post_id):
     # we are reusing the form to create a post, but now we are
     # passsing the sigle post as an obj to the form
     form = CreatePostForm(obj=post_edit)
+    # TODO DONT DELETE --- REMMEBR TO ADD THIS LINE BELOW TO INJECT THE CSRF TOKEN WHEN USING A FORM IN YOUR API ROUTE --- DONT DELETE
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         # This is a one liner to do the three lines of code below
         # USE WITH CAUTION it can override data fields with similar naming conventions
         # form.populate_obj(obj=post_edit_id)
 
-        post_edit.post_title=form.data["post_title"],
-        post_edit.post_body=form.data["post_body"],
+        # TODO YOU DONT NEED COMMAS IMPORTANT
+        post_edit.post_title=form.data["post_title"]
+        post_edit.post_body=form.data["post_body"]
         post_edit.post_img_url=form.data["post_img_url"]
 
-        db.session.add()
+        db.session.add(post_edit)
         db.session.commit()
-        return edit_post.to_dict(), 200
+        return post_edit.to_dict(), 200
     return form.errors, 400
 
-@post_routes.route('/<string:username>/<int:post_id>', methods=["DELETE"])
+@post_routes.route('/<int:post_id>', methods=["DELETE"])
 @login_required
-def delete_post(username, post_id):
+def delete_post(post_id):
 
     post_delete = Post.query.get(post_id)
 

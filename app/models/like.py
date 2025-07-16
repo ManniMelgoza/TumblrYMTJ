@@ -11,5 +11,5 @@ class Like(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")), nullable=False)
     #relationships
-    user = db.relationship("User", back_populates="likes")
-    post = db.relationship("Post", back_populates="likes")
+    # user = db.relationship("User", back_populates="likes")
+    # post = db.relationship("Post", back_populates="likes")

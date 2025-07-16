@@ -7,9 +7,9 @@ import { thunkPostForm } from "../../redux/post"
 
 function PostFormModal() {
     const dispatch = useDispatch();
-    cosnt [postTitle, setPostTitle] = useState("");
+    const [postTitle, setPostTitle] = useState("");
     const [postBody, setPostBody] = useState("");
-    cosnt [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
@@ -34,13 +34,18 @@ function PostFormModal() {
         <>
             {errors.server && <p>{errors.server}</p>}
             <form onSubmit={handleSubmit}>
+                {/* TITLE POST */}
                 <label>
                     Title Post
                     <input
                     type="text"
                     value={postTitle}
-                    onChange={(e) => setPostTitle}
+                    onChange={(e) => setPostTitle (e.target.value)}
+                    />
                 </label>
+                {errors.postTitle && <p>{errors.postTitle}</p>}
+                {/* POST BODY */}
+                
             </form>
         </>
     )

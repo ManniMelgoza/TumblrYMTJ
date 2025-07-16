@@ -15,7 +15,6 @@ def post_title_exists(form, field):
     if post:
         raise ValidationError("The post tile is already in use.")
 
-
 class CreatePostForm(FlaskForm):
     post_title = StringField('Title', validators=[DataRequired(), post_title_exists])
     post_body = TextAreaField('Go ahead, put yout thoughts and inspirations', validators=[DataRequired()])
