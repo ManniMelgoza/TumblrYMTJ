@@ -14,7 +14,8 @@ from .api.auth_routes import auth_routes
 from .api.post_routes import post_routes
 from .seeds import seed_commands
 from .config import Config
-
+from dotenv import load_dotenv
+load_dotenv()
 # change react-vite to what we remane our front end folder
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
