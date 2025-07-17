@@ -5,5 +5,6 @@ from .post import Post
 from .db import environment, SCHEMA
 from .like import Like #added by TJ
 from .post import Post #added by TJ
+from .comment import Comment # added by Yaseen 
 
-__all__ = ['db', 'User', 'Post', 'Like']#added by TJ
+__all__ = ['db', 'User', 'Post', 'Like', 'Comment']#added by TJ / Yaseen
