@@ -17,7 +17,7 @@ from .config import Config
 from dotenv import load_dotenv
 load_dotenv()
 # change react-vite to what we remane our front end folder
-app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
+app = Flask(__name__, static_folder='../FrontEnd/dist', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)

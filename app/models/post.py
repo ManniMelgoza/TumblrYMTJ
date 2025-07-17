@@ -21,6 +21,7 @@ class Post(db.Model, TimeStampMixin):
     #                     index=True,
     #                     unique=True)
     # user = db.relationship("User", back_populates='post')
+    
     # TODO COMMENT THIS LINE BACK UP LATER
     # likes = db.relationship("Like", back_populates="post", cascade="all, delete-orphan")
 
