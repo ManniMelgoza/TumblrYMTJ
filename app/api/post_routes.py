@@ -55,8 +55,9 @@ def edit_post(post_id):
     # we are reusing the form to create a post, but now we are
     # passsing the sigle post as an obj to the form
     form = CreatePostForm(obj=post_edit)
+    
     # TODO DONT DELETE --- REMMEBR TO ADD THIS LINE BELOW TO INJECT THE CSRF TOKEN WHEN USING A FORM IN YOUR API ROUTE --- DONT DELETE
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies['csrf_token'] # IMPORTANT LINE OF CODE NEEDED EVERYTIME A FORM IS DECLARED
 
     if form.validate_on_submit():
         # This is a one liner to do the three lines of code below

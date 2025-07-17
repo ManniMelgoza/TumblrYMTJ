@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .timestampmixin import TimeStampMixin
 
-# For all tables created they will inherit the TimeStampMixin 
+# For all tables created they will inherit the TimeStampMixin
 class Post(db.Model, TimeStampMixin):
     __tablename__ = 'posts'
 
@@ -21,8 +21,9 @@ class Post(db.Model, TimeStampMixin):
     #                     index=True,
     #                     unique=True)
     # user = db.relationship("User", back_populates='post')
-    likes = db.relationship("Like", back_populates="post", cascade="all, delete-orphan")
-    
+    # TODO COMMENT THIS LINE BACK UP LATER
+    # likes = db.relationship("Like", back_populates="post", cascade="all, delete-orphan")
+
     def to_dict(self):
         return {
             'id': self.id,
