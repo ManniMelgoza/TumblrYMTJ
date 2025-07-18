@@ -14,10 +14,10 @@ def seed_comments():
 
 def undo_comments():
     def undo_users():
-    if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
-    else:
-        db.session.execute(text("DELETE FROM comments"))
+        if environment == "production":
+            db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        else:
+            db.session.execute(text("DELETE FROM comments"))
         
     db.session.commit()
 
