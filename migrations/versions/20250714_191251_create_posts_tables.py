@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('post_title', sa.String(length=255), nullable=False),
     sa.Column('post_body', sa.Text(), nullable=False),
     sa.Column('post_img_url', sa.String(length=255), nullable=True),

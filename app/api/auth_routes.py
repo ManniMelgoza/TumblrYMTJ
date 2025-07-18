@@ -47,7 +47,7 @@ def login():
         return user.to_dict()
     return form.errors, 401
 
-
+# TODO WHEN THERE IS NO METHOD ARG DEFAULT TO A GET
 @auth_routes.route('/logout')
 def logout():
     """

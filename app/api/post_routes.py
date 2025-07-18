@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from app.models import Post, db
 from app.forms import CreatePostForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 # TODO DO WE NEED THE FLASK_LOGIN
 # would we need the log in to be able to create a post since you will already be logged in
 # from flask_login import current_user, login_user, logout_user, login_required
@@ -26,9 +26,11 @@ def all_posts():
 def create_post():
 
     form = CreatePostForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         new_post = Post(
+            owner_id=current_user.id,
             post_title=form.data["post_title"],
             post_body=form.data["post_body"],
             post_img_url=form.data["post_img_url"]
@@ -63,6 +65,8 @@ def edit_post(post_id):
         # form.populate_obj(obj=post_edit_id)
 
         # TODO YOU DONT NEED COMMAS IMPORTANT
+        # if post that i query has the same title as the tile that i query dont change it
+
         post_edit.post_title=form.data["post_title"]
         post_edit.post_body=form.data["post_body"]
         post_edit.post_img_url=form.data["post_img_url"]
