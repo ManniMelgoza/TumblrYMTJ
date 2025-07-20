@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux"
 import { useModal } from "../../context/Modal"
 // TODO: Need to make sure the thunk naming here mathches the resux post file
-import { thunkPostForm } from "../../redux/post"
+import { thunkGetAllPosts } from "../../redux/post"
 
 
 function PostFormModal() {
@@ -16,7 +16,7 @@ function PostFormModal() {
         e.preventDefault();
 
         const serverResponse = await dispatch(
-            thunkPostForm({
+            thunkGetAllPosts({
                 // TODO PHIL : when we do our naaming converntion in the front end for the values that we are getting from the back and do they need to be the same stype diff from what we are currently working on
                 postTitle,
                 postBody
@@ -45,7 +45,7 @@ function PostFormModal() {
                 </label>
                 {errors.postTitle && <p>{errors.postTitle}</p>}
                 {/* POST BODY */}
-                
+
             </form>
         </>
     )
