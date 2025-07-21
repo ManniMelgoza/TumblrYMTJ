@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 // *********************************
 //   ACTIONS
 // **********************************
@@ -35,12 +36,13 @@ const getAllPosts = (posts) => ({
 export const thunkGetAllPosts = () =>  async (dispatch) => {
 
     try{
-        const response = await fetch("api/posts/", {
+        // const response = await fetch("/api/spots", {
+        const response = await csrfFetch("/api/posts", {
             method: "GET"
         });
         if (response.ok){
             const postsData = await response.json();
-            dispatch(getAllPosts(postsData))
+            dispatch(getAllPosts(postsData.Posts))
             return postsData;
         }
         else {
