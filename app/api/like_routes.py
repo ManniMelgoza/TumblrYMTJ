@@ -22,14 +22,29 @@ def like_post(post_id):
     Like a post.
     """
     existing_like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
+    #check if a user has liked the post yet
 
     if existing_like:
-        return jsonify({"error": "Already liked"}), 400
-
+        # Already liked > remove the like
+        db.session.delete(existing_like)
+        db.session.commit()
+        return jsonify({
+            "liked": False,
+            "post_id": post_id,
+            "user_id": current_user.id,
+            "like_id": None
+        }), 200
+    
+    #if a post hasnt been liked yet, then create the like
     new_like = Like(user_id=current_user.id, post_id=post_id)
     db.session.add(new_like)
     db.session.commit()
-    return new_like.to_dict()
+    return jsonify({
+        "liked": True,
+        "post_id": post_id,
+        "user_id": current_user.id,
+        "like_id": new_like.id
+    }), 200
 
 
 # DELETE route to remove a like
