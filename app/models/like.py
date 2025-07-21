@@ -14,3 +14,12 @@ class Like(db.Model):
     # TODO COMMENT THIS LINE BACK UP LATER
     # user = db.relationship("User", back_populates="likes")
     # post = db.relationship("Post", back_populates="likes")
+    
+    #this will let any route do like.to.dict() and it should return a json friendly version of the like
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "post_id": self.post_id
+        }
+    
