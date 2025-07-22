@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     likes = db.relationship("Like", back_populates="user", cascade="all, delete-orphan")
-    following = db.relationship("Follow", foreign_keys=[Follow.follower_id], back_populates="follower", cascade="all, delete-orphan")
-    followers = db.relationship("Follow", foreign_keys=[Follow.following_id], back_populates="following", cascade="all, delete-orphan")
+    following = db.relationship("Follow", foreign_keys=[Follow.follower_id], back_populates="user", cascade="all, delete-orphan")
+    followers = db.relationship("Follow", foreign_keys=[Follow.following_id], back_populates="user", cascade="all, delete-orphan")
     
     @property
     def password(self):
@@ -35,6 +35,6 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'followers_count': len(self.followers),
-            'following_count': len(self.following),
+            'followers_count': len(self.followers),  # Gets a count of all the followers
+            'following_count': len(self.following)  # Gets a count of all the users the current user is following
         }
