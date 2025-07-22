@@ -93,3 +93,53 @@ def delete_post(post_id):
     db.session.delete(post_delete)
     db.session.commit()
     return {"Message": "Your post was successfully DELETED"}, 200
+
+# -------------------------- GET ALL COMMENTS FOR A POST -----------------------------#
+
+# full endpoint : 'api/posts/<int:postID>/comments'
+# no user auth to view all comments
+@comment_routes.route('/<int:postId>/comments', methods=["GET"]) # our endpoint is the postId number and the retrieval method is `GET`
+def all_comments(postId): # we begin a function that will retrieve all comments attached to a post by its postId
+    """
+    View all comments on a post
+    """
+    # here we use the SQLAlchemy's filter_by to get all comments by the postId which should match a id in our post_id column in our comments table
+    comments = Comment.query.filter_by(post_id=postId).all() 
+
+    # Since Flask does not know how to turn Python objects into JSON on its own 
+    # We use jsonify to convert the python into this universal readable object aka JSON response
+
+    return jsonify({'comments': [comment.to_dict() for comment in comments]}) 
+    # what this now does is it gives us a list (via to_dict) of comments under the key "comments": {{comment1}, {comment2}, {etc}}
+
+
+# --------------------------- POST A COMMENT ---------------------------------------#
+
+# full endpoint : 'api/posts/<int:postId>/comment'
+# user must be logged in and authenticated to create a comment on a post
+@comment_routes.route('/<int:postId>/comments', methods=['POST']) # creating a url with the method POST to post a comment
+@login_required # we require an authenticated user to create a comment
+def create_comment(postId): # defining our function name which requires a postId to be passed in as an argument
+    """
+    Create a comment on a particular post
+    """
+    form = CreateCommentForm()  # we create an instance of CreateCommentForm which represents the data and validation requirements for comment submission
+
+    # include csrf protection
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit(): # if the form is properly submitted and all validations pass then
+        new_comment = Comment(  # add it as "new_comment" via a Comment object, filling in the required fields
+            comment_body=form.data["comment_body"], # include comment body 
+            user_id=current_user.id, # associate the comment with the logged-in user
+            post_id=postId          # associate comment with the correct post 
+        )
+        db.session.add(new_comment) # if the comment is valid then add it and commit it
+        db.session.commit() # Commit this new comment to the SQLAlchemy database
+        return jsonify(new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
+    else:
+        return {'errors': form.errors}, 400 # our errors object will output what we specified in our form fields
+        # example: 
+        # {
+        #   'comment_body': ["You gotta write a comment to leave a comment!"]
+        # }

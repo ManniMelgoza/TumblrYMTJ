@@ -12,6 +12,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.post_routes import post_routes
+from .api.comment_routes import comment_routes # added by Yaseen
 from .seeds import seed_commands
 from .config import Config
 from dotenv import load_dotenv
@@ -36,6 +37,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
+app.register_blueprint(comment_routes, url_prefix='/api/comments') # added by Yaseen
 db.init_app(app)
 Migrate(app, db)
 
@@ -92,6 +94,10 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
     return app.send_static_file('index.html')
+
+@app.route("/api/csrf/restore", methods=["GET"])
+def restore_csrf():
+    return {"csrf_token": generate_csrf()}
 
 
 @app.errorhandler(404)
