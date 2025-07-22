@@ -6,61 +6,61 @@ from flask_login import login_required
 
 comment_routes = Blueprint('comments', __name__)
 
-# -------------------------- GET ALL COMMENTS FOR A POST -----------------------------#
+# # -------------------------- GET ALL COMMENTS FOR A POST -----------------------------#
 
-# full endpoint : 'api/comments/<int:postID>'
-# no user auth to view all comments
-@comment_routes.route('/<int:postId>', methods=["GET"]) # our endpoint is the postId number and the retrieval method is `GET`
-def all_comments(postId): # we begin a function that will retrieve all comments attached to a post by its postId
-    """
-    View all comments on a post
-    """
-    # here we use the SQLAlchemy's filter_by to get all comments by the postId which should match a id in our post_id column in our comments table
-    comments = Comment.query.filter_by(post_id=postId).all() 
+# # full endpoint : 'api/comments/post/<int:postID>'
+# # no user auth to view all comments
+# @comment_routes.route('/<int:postId>', methods=["GET"]) # our endpoint is the postId number and the retrieval method is `GET`
+# def all_comments(postId): # we begin a function that will retrieve all comments attached to a post by its postId
+#     """
+#     View all comments on a post
+#     """
+#     # here we use the SQLAlchemy's filter_by to get all comments by the postId which should match a id in our post_id column in our comments table
+#     comments = Comment.query.filter_by(post_id=postId).all() 
 
-    # Since Flask does not know how to turn Python objects into JSON on its own 
-    # We use jsonify to convert the python into this universal readable object aka JSON response
+#     # Since Flask does not know how to turn Python objects into JSON on its own 
+#     # We use jsonify to convert the python into this universal readable object aka JSON response
 
-    return jsonify({'comments': [comment.to_dict() for comment in comments]}) 
-    # what this now does is it gives us a list (via to_dict) of comments under the key "comments": {{comment1}, {comment2}, {etc}}
+#     return jsonify({'comments': [comment.to_dict() for comment in comments]}) 
+#     # what this now does is it gives us a list (via to_dict) of comments under the key "comments": {{comment1}, {comment2}, {etc}}
 
 
-# --------------------------- POST A COMMENT ---------------------------------------#
+# # --------------------------- POST A COMMENT ---------------------------------------#
 
-# full endpoint : 'api/comments/<int:postId>/comment'
-# user must be logged in and authenticated to create a comment on a post
-@comment_routes.route('/<int:postId>/comment', methods=['POST']) # creating a url with the method POST to post a comment
-@login_required # we require an authenticated user to create a comment
-def create_comment(postId): # defining our function name which requires a postId to be passed in as an argument
-    """
-    Create a comment on a particular post
-    """
-    form = CreateCommentForm()  # we create an instance of CreateCommentForm which represents the data and validation requirements for comment submission
+# # full endpoint : 'api/comments/<int:postId>/comment'
+# # user must be logged in and authenticated to create a comment on a post
+# @comment_routes.route('/<int:postId>/comment', methods=['POST']) # creating a url with the method POST to post a comment
+# @login_required # we require an authenticated user to create a comment
+# def create_comment(postId): # defining our function name which requires a postId to be passed in as an argument
+#     """
+#     Create a comment on a particular post
+#     """
+#     form = CreateCommentForm()  # we create an instance of CreateCommentForm which represents the data and validation requirements for comment submission
 
-    # include csrf protection
-    form['csrf_token'].data = request.cookies['csrf_token']
+#     # include csrf protection
+#     form['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate_on_submit(): # if the form is properly submitted and all validations pass then
-        new_comment = Comment(  # add it as "new_comment" via a Comment object, filling in the required fields
-            comment_body=form.data["comment_body"], # include comment body 
-            user_id=current_user.id, # associate the comment with the logged-in user
-            post_id=postId          # associate comment with the correct post 
-        )
-        db.session.add(new_comment) # if the comment is valid then add it and commit it
-        db.session.commit() # Commit this new comment to the SQLAlchemy database
-        return jsonify(new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
-    else:
-        return {'errors': form.errors}, 400 # our errors object will output what we specified in our form fields
-        # example: 
-        # {
-        #   'comment_body': ["You gotta write a comment to leave a comment!"]
-        # }
+#     if form.validate_on_submit(): # if the form is properly submitted and all validations pass then
+#         new_comment = Comment(  # add it as "new_comment" via a Comment object, filling in the required fields
+#             comment_body=form.data["comment_body"], # include comment body 
+#             user_id=current_user.id, # associate the comment with the logged-in user
+#             post_id=postId          # associate comment with the correct post 
+#         )
+#         db.session.add(new_comment) # if the comment is valid then add it and commit it
+#         db.session.commit() # Commit this new comment to the SQLAlchemy database
+#         return jsonify(new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
+#     else:
+#         return {'errors': form.errors}, 400 # our errors object will output what we specified in our form fields
+#         # example: 
+#         # {
+#         #   'comment_body': ["You gotta write a comment to leave a comment!"]
+#         # }
 
 # ---------------------------- EDIT A COMMENT ------------------------------------------# 
 
-# full endpoint : 'api/comments/<int:postId>/edit/<int:commentId>'
+# full endpoint : 'api/comments/<int:commentId>/edit'
 # user must be logged in and authenticated
-@comment_routes.route('/<int:postId>/edit/<int:commentId>', methods=["PUT"])
+@comment_routes.route('/<int:commentId>/edit', methods=["PUT"])
 @login_required # user must be logged in
 def edit_comment(postId, commentId): # we create a function which will allow us to edit an existing comment so we will need the postId and now the commentId because we need to know which comment is being edited on what post
 # login_user(user)
@@ -116,7 +116,7 @@ def edit_comment(postId, commentId): # we create a function which will allow us 
 # now we have to delete a comment so we establish our route
 # same as edit route essentially because we need a postid and commentid
 # full API route with Blueprints is /api/comments/postId/delete/commentId
-@comment_routes.route('/<int:postId>/delete/<int:commentId>')
+@comment_routes.route('/<int:commentId>/delete')
 @login_required # user must be logged in to perform this CRUD operation
 def delete_comment(postId, commentId): # pass in our integers from our endpoint into our delete_comment function to ensure a valid deletion
 
