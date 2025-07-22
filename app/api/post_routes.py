@@ -1,9 +1,10 @@
-from flask import Blueprint, request
-from app.models import Post, db
-from app.forms import CreatePostForm
+from flask import Blueprint, request, jsonify # added jsonify - Yaseen 
+from app.models import Post, Comment, User, db # added Comment and User - Yaseen 
+from app.forms import CreatePostForm, CreateCommentForm # added comment form - Yaseen
 from flask_login import current_user, login_user, logout_user, login_required
 
 post_routes = Blueprint('posts', __name__)
+comment_routes = Blueprint('comments', __name__) # added comment_routes blueprints - Yaseen
 
 # *********************************
 #       GET All Posts Route
