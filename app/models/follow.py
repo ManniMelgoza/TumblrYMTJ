@@ -23,19 +23,18 @@ class Follow(db.Model):
         db.ForeignKey(add_prefix_for_prod("users.id")), 
         nullable=False
     )
-     
-    # Connects the follow to the user model for the follower's record
+
+    #RELATIONSHIPS
     follower = db.relationship(
         "User",
-        foreign_keys=[follower_id], 
-        back_populates="followers",
+        foreign_keys=[follower_id],
+        backref="following_relationships"
     )
-
-    # Connects the follow to the user model for the folowing user's record
+    
     following = db.relationship(
         "User", 
-        foreign_keys=[following_id], 
-        back_populates="following"
+        foreign_keys=[following_id],
+        backref="follower_relationships"
     )
 
     def to_dict(self):
