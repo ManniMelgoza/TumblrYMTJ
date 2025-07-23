@@ -25,8 +25,8 @@ class Follow(db.Model):
     )
      
     # Connects the follow to the user model for the follower's record
-    follower = db.relationship()
-        "User", 
+    follower = db.relationship(
+        "User",
         foreign_keys=[follower_id], 
         back_populates="followers",
     )

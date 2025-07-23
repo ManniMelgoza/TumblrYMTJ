@@ -8,10 +8,11 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, follow
+from .models import db, User, Follow
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.post_routes import post_routes
+from .api.follow_routes import follow_routes
 from .api.comment_routes import comment_routes # added by Yaseen
 from .api.like_routes import like_routes
 from .seeds import seed_commands
@@ -35,11 +36,13 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
 app.register_blueprint(comment_routes, url_prefix='/api/comments') # added by Yaseen
 app.register_blueprint(like_routes, url_prefix='/api/likes')
+app.register_blueprint(follow_routes, url_prefix='/api/follows') # Added by Jacob
 db.init_app(app)
 Migrate(app, db)
 
