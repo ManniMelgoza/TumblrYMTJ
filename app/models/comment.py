@@ -20,9 +20,9 @@ class Comment(db.Model, TimeStampMixin):
         )
     comment_body = db.Column(db.String(300), nullable=False)
 
-    # # Relationships
+# Relationships
     user = db.relationship("User", back_populates="comments")
-    # post = db.relationship("Post", back_populates="comments")
+    post = db.relationship("Post", back_populates="comments")
 
     def to_dict(self):
         return {

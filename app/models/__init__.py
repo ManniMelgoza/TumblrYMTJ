@@ -20,4 +20,4 @@ from app.models.post import Post
 from app.models.like import Like
 
 it also makes sure that when alembic scans our files it automatically detects our models. 
-"""
+""" 
