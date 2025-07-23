@@ -30,5 +30,6 @@ class Comment(db.Model, TimeStampMixin):
             'user_id': self.user_id,
             'post_id': self.post_id,
             'comment_body': self.comment_body,
+            # TJ LOOK AT THIS BELOW: 
             'username': self.user.username if self.user else None # extracting just the username from our Users table to attach to the response body 
         }

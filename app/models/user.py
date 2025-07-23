@@ -16,9 +16,9 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
 # Relationships 
-    likes = db.relationship("Like", back_populates="users", cascade="all, delete-orphan")
-    comments = db.relationship("Comment", back_populates="users", cascade="all, delete-orphan")
-    posts = db.relationship("Post", back_populates="users", cascade="all")
+    likes = db.relationship("Like", back_populates="user", cascade="all, delete-orphan")
+    comments = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")
+    post = db.relationship("Post", back_populates="user", cascade="all")
     
     # JOINING in the value of posts a column name magically being made in the user table to be able to access data but not visible in schema
     # Column varibale = db.relationship("WHAT TABLE WE WANT THE DATA TO COME FROM", back_populates="must match in the user or model you want to look at for data")
