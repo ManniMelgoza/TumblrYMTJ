@@ -23,6 +23,7 @@ def seed():
         undo_users()
         undo_posts()
         undo_comments() # added by Yaseen 
+        undo_likes() # added by Mani 
     seed_users()
     seed_posts()
     seed_comments() # added by Yaseen 
