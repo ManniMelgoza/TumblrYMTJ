@@ -25,9 +25,9 @@ const getAllPosts = (posts) => ({
 //     payload: editPost
 // });
 
-// const deletePost = (spot_id) => ({
+// const deletePost = (post_id) => ({
 //     type: DELETE_POST,
-//     payload: spot_id
+//     payload: post_id
 // });
 
 // *********************************
@@ -36,10 +36,9 @@ const getAllPosts = (posts) => ({
 export const thunkGetAllPosts = () =>  async (dispatch) => {
 
     try{
-        // const response = await fetch("/api/spots", {
-        const response = await csrfFetch("/api/posts", {
-            method: "GET"
-        });
+        // const response = await fetch("/api/posts", {
+        const response = await csrfFetch("/api/posts");
+
         if (response.ok){
             const postsData = await response.json();
             dispatch(getAllPosts(postsData.Posts))
@@ -60,7 +59,7 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
 // export const thunkCreatePost = () => async (dispatch) => {
 
 //     try {
-//         const response = await fetch("api/spots/create");
+//         const response = await fetch("api/posts/create");
 //             if (response.ok) {
 //                 const createSpotData = await response.json();
 //                 dispatch(createPost(createSpotData));
@@ -79,8 +78,8 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
 // export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
 //     try{
-//         const response = await fetch(`api/spots/${post_id}}/edit`, {
-//             method: "ACTIONS",
+//         const response = await fetch(`api/posts/${post_id}}/edit`, {
+//             method: "PUT",
 //             headers: { 'Content-Type': 'application/json' },
 //             body: JSON.stringify(postEdit)
 //         });
@@ -98,14 +97,14 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
 //     }
 // };
 
-// export const thinkDeletePost = (spot_id) => async (dispatch) => {
+// export const thinkDeletePost = (post_id) => async (dispatch) => {
 
 //     try {
-//         const response = await fetch (`api/spots/${spot_id}`,{
+//         const response = await fetch (`api/posts/${post_id}`,{
 //             method: 'DELETE'
 //         });
 //         if (response.ok) {
-//             dispatch(deletePost(spot_id))
+//             dispatch(deletePost(post_id))
 //             return deletePost;
 //         } else {
 //             const error = await response.json();
