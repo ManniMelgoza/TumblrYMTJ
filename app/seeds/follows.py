@@ -1,15 +1,18 @@
-from app.models import db, Follow
+from app.models import db, Follow, User
 from sqlalchemy.sql import text
 
-def seed_following():
-    like1 = Like(user_id=1, post_id=1)
-    like2 = Like(user_id=2, post_id=1)
-    like3 = Like(user_id=1, post_id=2)
+def seed_follow():
+    follows = [
+        Follow(follower_id=1, following_id=2), # Demo should be following Marnie
+        Follow(follower_id=2, following_id=3), # Marnie should be following Bobbie
+        Follow(follower_id=3, following_id=1) # Bobby should be following demo
+    ]
 
-    db.session.add_all([like1, like2, like3])
+    for follow in follows:
+        db.session.add(follow)
+
     db.session.commit()
 
-
-def undo_likes():
-    db.session.execute(text("DELETE FROM likes"))
+def undo_follow():
+    db.session.execute(text("DELETE FROM FOLLOWS"))
     db.session.commit()
