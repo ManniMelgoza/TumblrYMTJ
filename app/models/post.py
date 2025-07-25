@@ -9,7 +9,7 @@ class Post(db.Model, TimeStampMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     post_title = db.Column(db.String(255), nullable=False)
     post_body = db.Column(db.Text, nullable=False)
     post_img_url = db.Column(db.String(255), nullable=True)
