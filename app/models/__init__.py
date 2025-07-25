@@ -6,8 +6,9 @@ from .db import environment, SCHEMA
 from .like import Like #added by TJ
 from .post import Post #added by TJ
 from .comment import Comment # added by Yaseen 
+from .follow import Follow # Added by Jacob
 
-__all__ = ['db', 'User', 'Post', 'Like', 'Comment']#added by TJ
+__all__ = ['db', 'User', 'Post', 'Like', 'Comment', 'Follow']#added by TJ
 """
 __all__ accounts for what are called wildcard imports like if one of us uses:
  from app.models import * 

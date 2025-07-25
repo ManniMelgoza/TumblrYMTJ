@@ -1,8 +1,8 @@
-"""create-tables
+"""create_tables
 
-Revision ID: abe91ccd966e
+Revision ID: d985bc9195d5
 Revises: 
-Create Date: 2025-07-23 23:00:18.525450
+Create Date: 2025-07-24 18:00:39.583441
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'abe91ccd966e'
+revision = 'd985bc9195d5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,16 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
+    )
+    op.create_table('follows',
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('follower_id', sa.Integer(), nullable=False),
+    sa.Column('following_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['follower_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['following_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('posts',
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
@@ -65,5 +75,6 @@ def downgrade():
     op.drop_table('likes')
     op.drop_table('comments')
     op.drop_table('posts')
+    op.drop_table('follows')
     op.drop_table('users')
     # ### end Alembic commands ###
