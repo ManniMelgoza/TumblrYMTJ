@@ -4,6 +4,7 @@ from .users import seed_users, undo_users
 from .posts import seed_posts, undo_posts
 from .comments import seed_comments, undo_comments # added by Yaseen 
 from .likes import seed_likes, undo_likes
+from .follows import seed_follow, undo_follow
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -23,10 +24,13 @@ def seed():
         undo_users()
         undo_posts()
         undo_comments() # added by Yaseen 
+        undo_likes() # added by Mani 
+        undo_follow() # added by Jacob 
     seed_users()
     seed_posts()
     seed_comments() # added by Yaseen 
     seed_likes()
+    seed_follow() # Jacob 
     # Add other seed functions here
     # We would had seed_post() here
 
@@ -37,5 +41,6 @@ def undo():
     undo_posts()
     undo_comments() # added by Yaseen
     undo_likes()
+    undo_follow() # Jacob 
     # Add other undo functions here
     # We would had undo_post() here
