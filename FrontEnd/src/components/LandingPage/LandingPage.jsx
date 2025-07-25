@@ -50,7 +50,7 @@ const LandingPage = () => {
                     <div className ='mainGridImg'>
                         <div className ='mainImg-card'>
                             {
-                                <img src={ selectedImage } alt={ postsArr.post_title } />
+                                <img src={ selectedImage } alt={ postsArr.post_title[randomIndex] } />
                             }
                         </div>
                     </div>
