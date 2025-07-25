@@ -134,16 +134,29 @@ def get_user_follows(user_id):
                 "created_at": (
                     f.created_at.isoformat() if hasattr(f, "created_at") else None
                 ),
-                "user": {
-                    "id": (
-                        f.follower.id if follow_type == "followers" else f.following.id
-                    ),
-                    "username": (
-                        f.follower.username
-                        if follow_type == "followers"
-                        else f.following.username
-                    ),
+                "current_user": {
+                    "followers": {
+                        "id": (
+                            f.following.id if follow_type == "following" else f.follower.id
+                        ),
+                        "username": (
+                            f.following.username
+                            if follow_type == "following"
+                            else f.follower.username
+                        )
+                    },
+                    "following": {
+                        "id": (
+                            f.follower.id if follow_type == "followers" else f.following.id
+                        ),
+                        "username": (
+                            f.follower.username
+                            if follow_type == "followers"
+                            else f.following.username
+                        ),
+                    }
                 },
+                
             }
             for f in follows
         ]
