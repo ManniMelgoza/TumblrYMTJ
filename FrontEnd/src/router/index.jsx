@@ -20,6 +20,10 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupFormPage />,
       },
+      {
+        path: "test-like", 
+        element: <TestLike />,
+      }, //added by tj just to test like functionality. can be removed or commented out later
     ],
   },
 ]);

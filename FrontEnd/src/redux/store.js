@@ -8,11 +8,14 @@ import thunk from "redux-thunk";
 // Add redux reducers below
 import sessionReducer from "./session";
 import postsReducer from "./post";
+import likesReducer from "./like";
+
 
 const rootReducer = combineReducers({
   //add the reducers import names here
   session: sessionReducer,
-  posts: postsReducer
+  posts: postsReducer,
+  likes: likesReducer
 });
 
 let enhancer;
