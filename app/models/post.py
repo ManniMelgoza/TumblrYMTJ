@@ -15,20 +15,13 @@ class Post(db.Model, TimeStampMixin):
     post_img_url = db.Column(db.String(255), nullable=True)
 
 # Relationships
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'),
-    #                     # ondelete='CASCADE',
-    #                     nullable=False,
-    #                     index=True,
-    #                     unique=True)
-    # user = db.relationship("User", back_populates='post')
-
-    # TODO COMMENT THIS LINE BACK UP LATER
-    # comments = db.relationship("Comment", back_populates="post", cascade="all, delete-orphan")
-    # likes = db.relationship("Like", back_populates="post", cascade="all, delete-orphan")
+    user = db.relationship("User", back_populates='post')
+    comments = db.relationship("Comment", back_populates="post", cascade="all, delete-orphan")
+    likes = db.relationship("Like", back_populates="post", cascade="all, delete-orphan")
 
     # NOTE FOR POST: IF WE ADD cascade delete of any type here if we remove post whatever user is linked to that post will also be deleted
     # NOTE FOR POST: THINK of logic for cascase delete before adding it to all sided of the relationships
-    user = db.relationship("User", back_populates="posts") 
+
 
 
     def to_dict(self):
