@@ -1,4 +1,4 @@
-from app.models import db, Follow, User
+from app.models import db, Follow, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_follow():
@@ -14,5 +14,9 @@ def seed_follow():
     db.session.commit()
 
 def undo_follow():
-    db.session.execute(text("DELETE FROM FOLLOWS"))
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.follows RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM follows"))
+
     db.session.commit()
