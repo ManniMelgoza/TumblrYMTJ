@@ -1,24 +1,100 @@
-
-
-/*
-.mainImage {
-
-} */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    grid-template-rows: repeat(2, auto);   /* 2 rows */
-    gap: 10px;
-    margin-top: 20px;
-    justify-items: center;
+.landing-container {
+    display: flex;
+    flex-direction: row;
 }
 
-.post-card {
-    width: 300px;
-    height: 300px;
+.logoColumn {
+
+    width: 220px;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-right: 2px solid #000000;
+}
+
+.browse-post-title {
+    width: 100%;
+    /* margin-bottom: 20px; */
+    font-size: 40px;
+    /* text-align: left; */
+    padding-left: 300px;
+}
+.image-wrapper {
+
+    display: flex;
+    /* top align */
+    align-items: flex-start;
+    gap: 20px; /* spacing between large and small image sections */
+    /* margin-top: 20px; */
+    padding-left: 40px;
+}
+
+.mainImgSection {
+
+    flex-shrink: 0; /* prevents shrinking of large image */
+
+}
+
+.smallImgSection {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.mainGridImg {
+
+    display: grid;
+    /* 3 columns */
+    /* grid-template-columns: repeat(1, 1fr); */
+    grid-template-rows: repeat(auto);   /* 2 rows */
+    gap: 10px;
+    /* margin-top: 20px; */
+    justify-items: left;
+
+}
+
+.mainImg-card {
+
+    width: 400px;
+    height: 400px;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.mainImg-card img {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+}
+
+/* Small images */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(2);   /* 2 rows */
+    column-gap: 10px;
+    row-gap: 10px;
+    /* margin-top: 20px; */
+    justify-items: center;
+    column-gap: 0;
+
+}
+
+.post-card {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .post-card img {
