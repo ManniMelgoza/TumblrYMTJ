@@ -18,16 +18,6 @@ class User(db.Model, UserMixin):
     likes = db.relationship("Like", back_populates="user", cascade="all, delete-orphan")
     following = db.relationship("Follow", foreign_keys=[Follow.follower_id], back_populates="user", cascade="all, delete-orphan")
     followers = db.relationship("Follow", foreign_keys=[Follow.following_id], back_populates="user", cascade="all, delete-orphan")
-    
-    following = db.relationship('Follow', 
-        foreign_keys=[Follow.follower_id],
-        backref='follower_user',
-    )
-
-    followers = db.relationship('Follow',
-        foreign_keys=[Follow.following_id],
-        backref='following_user'
-    )
 
     @property
     def password(self):

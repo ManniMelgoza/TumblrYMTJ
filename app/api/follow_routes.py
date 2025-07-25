@@ -104,9 +104,9 @@ def remove_follow(following_id):
         return jsonify({"error": str(e)}), 500
 
 
-# -----------------------------------------------------------------
+# --------------------------------------------------------------------
 # GET route that retrieves the followers or following list for a user.
-# ----------------------------------------------------------------
+# --------------------------------------------------------------------
 @follow_routes.route("/follows/<int:user_id>", methods=["GET"])
 @login_required
 def get_user_follows(user_id):
