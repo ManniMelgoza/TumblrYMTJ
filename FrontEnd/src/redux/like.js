@@ -15,27 +15,29 @@ const removeLike = (likeId) => ({ type: REMOVE_LIKE, likeId });
 
 //thunks
 export const fetchLikes = (postId) => async (dispatch) => {
-  const res = await fetch(`/api/posts/${postId}/likes`);
+  const res = await fetch(`/api/likes/${postId}`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadLikes(data.likes));
+    dispatch(loadLikes(data));
   }
 };
 
 export const createLike = (postId) => async (dispatch) => {
-  const res = await fetch(`/api/posts/${postId}/likes`, {
-    method: "POST",
+  const response = await fetch(`/api/likes/${postId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
   });
-  if (res.ok) {
-    const like = await res.json();
-    dispatch(addLike(like));
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addLike(data));
   }
 };
 
 export const deleteLike = (postId, likeId) => async (dispatch) => {
-  const res = await fetch(`/api/posts/${postId}/likes/${likeId}`, {
-    method: "DELETE",
-  });
+  const res = await fetch(`/api/likes/${postId}`, {
+  method: "DELETE",
+});
   if (res.ok) {
     dispatch(removeLike(likeId));
   }

@@ -6,7 +6,8 @@ import { thunkGetAllPosts } from "../../redux/post";
 import './LandingPage.css';
 import { useEffect } from "react";
 import { FaRegCompass } from "react-icons/fa";
-
+//import Likebutton from "../LikeButton"; //added by tj
+import PostCard from "../PostCard/PostCard"; //added by tj
 
 
 const LandingPage = () => {
@@ -59,13 +60,9 @@ const LandingPage = () => {
                 <div className="smallImgSection">
                     {/* <h1>Small images</h1> */}
                         <div className='grid'>
-                            {postsArr.slice(0, 6).map((post) => (
-                                <div key={post.id} className="post-card">
-                                {/* <h2>{post.post_title}</h2> */}
-                                {/* <p>{post.post_body}</p> */}
-                                {<img src={post.post_img_url} alt={post.post_title} />}
-                                </div>
-                            ))}
+                           {postsArr.slice(0, 6).map((post) =>
+                                post ? <PostCard key={post.id} post={post} /> : null
+                            )}
                         </div>
                 </div>
             </div>

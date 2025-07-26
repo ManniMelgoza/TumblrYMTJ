@@ -1,5 +1,5 @@
 //this is just to test like functionality. we can totally remove it later
-import LikeButton from "./LikeButton";
+import LikeButton from "./Likebutton";
 
 const TestLike = () => {
   return (
