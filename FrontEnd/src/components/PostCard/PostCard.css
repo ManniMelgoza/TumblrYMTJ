@@ -1,0 +1,46 @@
+.post-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  max-width: 300px;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.post-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.post-body {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.like-button-container {
+  margin-top: 8px;
+}
+
+.post-card {
+  text-decoration: none;
+  color: inherit;
+}

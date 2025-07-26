@@ -1,0 +1,20 @@
+.like-button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.like-button {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.like-button:hover {
+  transform: scale(1.05);
+}

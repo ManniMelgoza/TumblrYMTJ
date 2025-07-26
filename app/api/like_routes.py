@@ -7,9 +7,6 @@ like_routes = Blueprint('likes', __name__)
 # GET route to pull all likes on a post
 @like_routes.route('/<int:post_id>', methods=['GET'])
 def get_likes(post_id):
-    """
-    Get all likes for a specific post.
-    """
     likes = Like.query.filter_by(post_id=post_id).all()
     return jsonify([like.to_dict() for like in likes])
 
@@ -18,9 +15,6 @@ def get_likes(post_id):
 @like_routes.route('/<int:post_id>', methods=['POST'])
 @login_required
 def like_post(post_id):
-    """
-    Like a post.
-    """
     existing_like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
     #check if a user has liked the post yet
 
@@ -51,9 +45,6 @@ def like_post(post_id):
 @like_routes.route('/<int:post_id>', methods=['DELETE'])
 @login_required
 def unlike_post(post_id):
-    """
-    Unlike a post.
-    """
     like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
 
     if not like:
