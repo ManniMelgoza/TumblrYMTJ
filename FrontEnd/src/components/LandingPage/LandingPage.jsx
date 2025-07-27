@@ -38,7 +38,7 @@ const LandingPage = () => {
                 <div className="logoColumn">
                     <div className="logoWrapper">
                         <div className="logoImg">
-                        <img src="ReelQuotesLogo.gif" />
+                        <img src="ReelQuotesLogo.gif" alt="Logo" />
                         </div>
                     </div>
 
