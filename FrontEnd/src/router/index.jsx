@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import LandingPage from '../components/LandingPage/LandingPage';
-import FollowsModal from '../components/FollowsModal/FollowsModal';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
 import Layout from './Layout';
 import PostDetailPage from "../components/PostDetailPage/PostDetailPage";
@@ -38,12 +37,8 @@ export const router = createBrowserRouter([
         element: <PostFormModal />
       },
       {
-        path: "/profile/:userid",
+        path: "/profile/:id",
         element: <ProfilePage /> 
-      },
-      {
-        path: "/follows",
-        element: <FollowsModal />
       }
     ],
   },

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 //   ACTIONS
 // **********************************
 const GET_ALL_POSTS = 'posts/getAllPosts';
+const GET_CURRENT_USERS_POSTS = 'posts/currentUserPosts';
 const CREATE_POST = 'posts/createPost';
 // const EDIT_POST = 'posts/editPost';
 // const DELETE_POST = 'posts/deletePost';
