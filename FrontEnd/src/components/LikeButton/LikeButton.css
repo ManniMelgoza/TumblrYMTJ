@@ -1,0 +1,120 @@
+/* Container for the like button and count */
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Optional compact version */
+.like-container.compact .like-button {
+  font-size: 1rem;
+}
+
+.like-container.compact .like-count {
+  font-size: 0.8rem;
+}
+
+.like-container.compact .heart-icon {
+  font-size: 1rem;
+}
+
+/* Button styling */
+.like-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.like-button:hover {
+  transform: scale(1.15);
+}
+
+/* Heart icon itself */
+.heart-icon {
+  line-height: 1;
+  transition: color 0.2s ease;
+  color: #ccc; /* default gray when not liked */
+}
+
+/* When liked */
+.like-button.liked .heart-icon {
+  color: #ff0000;
+  filter: drop-shadow(0 0 3px rgba(255, 55, 87, 0.4));
+  animation: pulse 0.4s ease;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Like count next to the heart */
+.like-count {
+  font-size: 0.9rem;
+  min-width: 20px;
+  text-align: center;
+  user-select: none;
+  cursor: default;
+}
+
+.like-count.clickable {
+  cursor: pointer;
+}
+
+.like-count.clickable:hover {
+  text-decoration: underline;
+}
+
+/* Modal styles */
+.likes-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 300px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.likes-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* List of users who liked the post */
+.likers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.likers-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}

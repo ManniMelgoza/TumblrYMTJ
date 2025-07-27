@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 //   ACTIONS
 // **********************************
 const GET_ALL_POSTS = 'posts/getAllPosts';
-// const CREATE_POST = 'posts/createPost';
+const CREATE_POST = 'posts/createPost';
 // const EDIT_POST = 'posts/editPost';
 // const DELETE_POST = 'posts/deletePost';
 
@@ -15,10 +15,10 @@ const getAllPosts = (posts) => ({
     payload: posts
 });
 
-// const createPost = (newPost) => ({
-//     type: CREATE_POST,
-//     payload: newPost
-// });
+const createPost = (newPost) => ({
+    type: CREATE_POST,
+    payload: newPost
+});
 
 // const editPost = (editPost) => ({
 //     type: EDIT_POST,
@@ -56,24 +56,24 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
     }
 };
 
-// export const thunkCreatePost = () => async (dispatch) => {
+export const thunkCreatePost = () => async (dispatch) => {
 
-//     try {
-//         const response = await fetch("api/posts/create");
-//             if (response.ok) {
-//                 const createSpotData = await response.json();
-//                 dispatch(createPost(createSpotData));
-//                 return createSpotData;
-//             }
-//             else{
-//                 const error = await response.json();
-//                 return { error: error.errors || ["Not able to create post"] };
-//             }
-//         } catch (err) {
-//             console.error('Error creating post', err);
-//             return { "error": "Unable to create the post"}
-//     }
-// };
+    try {
+        const response = await fetch("api/posts/create");
+            if (response.ok) {
+                const createSpotData = await response.json();
+                dispatch(createPost(createSpotData));
+                return createSpotData;
+            }
+            else{
+                const error = await response.json();
+                return { error: error.errors || ["Not able to create post"] };
+            }
+        } catch (err) {
+            console.error('Error creating post', err);
+            return { "error": "Unable to create the post"}
+    }
+};
 
 // export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
@@ -128,11 +128,11 @@ function postsReducer(state = initialState, action) {
             action.payload.forEach((post) => (newState[post.id] = post));
             return newState;
         }
-        // case CREATE_POST: {
-        //     const newState = { ...state };
-        //     newState[action.payload.id] = { ...action.payload }
-        //     return newState;
-        // }
+        case CREATE_POST: {
+            const newState = { ...state };
+            newState[action.payload.id] = { ...action.payload }
+            return newState;
+        }
         // case EDIT_POST:{
         //     return { ...state, [action.payload.id]: action.payload };
         // }
