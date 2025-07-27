@@ -14,6 +14,19 @@ def all_posts():
     posts = Post.query.all()
     return {'Posts': [post.to_dict() for post in posts]}
 
+# ADDING ANOTHER GET ROUTE TO FETCH ALL POSTS OF A USER 
+# *********************************
+#       GET Current User's Posts Route
+# **********************************
+@post_routes.route("/current", methods=['GET'])
+@login_required  # Ensures the user must be logged in to access their own posts
+def current_user_posts():
+    # Fetch posts that belong to the logged-in user
+    posts = Post.query.filter_by(owner_id=current_user.id).all()
+    
+    # Return the posts in the expected response format
+    return {'Posts': [post.to_dict() for post in posts]}
+
 # *********************************
 #   POST Create a New Post Route
 #**********************************

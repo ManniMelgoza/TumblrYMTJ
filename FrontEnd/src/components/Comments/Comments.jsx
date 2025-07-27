@@ -16,7 +16,15 @@ function Comments({ postId }) { // creating a function that will take in a postI
     }, [dispatch, postId]); // when the component mounts or when postId changes, it will get all the comments for that post
 
     const handleCreate = (e) => { 
-        e.preventDefault()
-    }
+        e.preventDefault(); 
+        if (!newComment.trim()) return; 
+        dispatch(createComment(postId, { comment_body: newComment })); 
+        setNewComment(''); 
+    }; 
+
+    const startEditing = (comment) => {
+        setEditId(comment.id); 
+        setEditBody(comment.comment_body);
+    }; 
 
 }
