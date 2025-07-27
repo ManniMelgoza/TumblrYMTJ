@@ -1,9 +1,41 @@
-import { useState, useEffect } from 'react';
+
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkGetUserPosts } from '../redux/posts';
+
+const ProfilePage = () => {
+    const dispatch = useDispatch();
+    const userPosts = useSelector(state => Object.values(state.posts)); // Or `state.posts.userPosts` if you used separate key
+
+    useEffect(() => {
+        dispatch(thunkGetUserPosts());
+    }, [dispatch]);
+
+    return (
+        <div>
+            <h2>Your Posts</h2>
+            <div className="user-posts-container">
+                {userPosts.length ? userPosts.map(post => (
+                    <div key={post.id} className="post-card">
+                        <h3>{post.post_title}</h3>
+                        <img src={post.post_img_url} alt="Post" />
+                        <p>{post.post_body}</p>
+                    </div>
+                )) : <p>No posts yet.</p>}
+            </div>
+        </div>
+    );
+};
+
+export default ProfilePage;
+
+
+/*import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FollowsModal from '../FollowsModal/FollowsModal';
 import './ProfilePage.css';
 
-function ProfilePage() {
+ function ProfilePage() {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -93,3 +125,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+*/

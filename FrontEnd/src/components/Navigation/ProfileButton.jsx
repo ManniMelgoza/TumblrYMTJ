@@ -46,7 +46,7 @@ function ProfileButton() {
 
 
     const goToProfile = () => {
-      navigate('/profile/:id');
+      navigate('/profile');
     }
 
 

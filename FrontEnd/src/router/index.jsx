@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
         element: <PostFormModal />
       },
       {
-        path: "/profile/:id",
+        path: "/profile",
         element: <ProfilePage /> 
       }
     ],
