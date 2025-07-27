@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify # added jsonify - Yaseen 
+from flask import Blueprint, request  # removed jsonify - Yaseen 
 from app.models import Post, Comment, User, db # added Comment and User - Yaseen 
 from app.forms import CreatePostForm, CreateCommentForm # added comment form - Yaseen
 from flask_login import current_user, login_user, logout_user, login_required
@@ -110,7 +110,7 @@ def all_comments(postId): # we begin a function that will retrieve all comments 
     # Since Flask does not know how to turn Python objects into JSON on its own 
     # We use jsonify to convert the python into this universal readable object aka JSON response
 
-    return jsonify({'comments': [comment.to_dict() for comment in comments]}) 
+    return ({'comments': [comment.to_dict() for comment in comments]}) 
     # what this now does is it gives us a list (via to_dict) of comments under the key "comments": {{comment1}, {comment2}, {etc}}
 
 
@@ -137,7 +137,7 @@ def create_comment(postId): # defining our function name which requires a postId
         )
         db.session.add(new_comment) # if the comment is valid then add it and commit it
         db.session.commit() # Commit this new comment to the SQLAlchemy database
-        return jsonify(new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
+        return (new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
     else:
         return {'errors': form.errors}, 400 # our errors object will output what we specified in our form fields
         # example: 

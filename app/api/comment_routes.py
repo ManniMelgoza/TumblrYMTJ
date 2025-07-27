@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import login_required, current_user, login_user # ensuring logged in users can comment, and ensuring curent_user can do things 
 from app.models import User, Comment, Post, db
 from app.forms import CreateCommentForm
@@ -62,7 +62,7 @@ comment_routes = Blueprint('comments', __name__)
 # user must be logged in and authenticated
 @comment_routes.route('/<int:commentId>/edit', methods=["PUT"])
 @login_required # user must be logged in
-def edit_comment(postId, commentId): # we create a function which will allow us to edit an existing comment so we will need the postId and now the commentId because we need to know which comment is being edited on what post
+def edit_comment(commentId): # we create a function which will allow us to edit an existing comment so we will need the postId and now the commentId because we need to know which comment is being edited on what post
 # login_user(user)
 # user must be owner of that comment to edit it
 
@@ -85,7 +85,7 @@ def edit_comment(postId, commentId): # we create a function which will allow us 
     # So if our comment does not exist in the database or...
     # if the postId extracted from our API endpoint does not match a number under our post_id column in our Comment table
     # then throw an error
-    if not comment or comment.post_id != postId:
+    if not comment:
         return { 'message': 'Comment not found on this post'}, 404 # in case a comment is deleted and is removed from database
 
     # Same Mah-Jong tile matching logic here: 
@@ -118,12 +118,12 @@ def edit_comment(postId, commentId): # we create a function which will allow us 
 # full API route with Blueprints is /api/comments/postId/delete/commentId
 @comment_routes.route('/<int:commentId>/delete')
 @login_required # user must be logged in to perform this CRUD operation
-def delete_comment(postId, commentId): # pass in our integers from our endpoint into our delete_comment function to ensure a valid deletion
+def delete_comment(commentId): # pass in our integers from our endpoint into our delete_comment function to ensure a valid deletion
 
     comment = Comment.query.get(commentId) # again, we fetch that integer from our endpoint from our table
 
     # if that id number does not exist in our database or if the commentId is not associated with that postId then throw an error
-    if not comment or comment.post_id != postId:
+    if not comment:
         return { 'message': 'Comment not found on this post'}, 404
 
     # if that comment does not belong to the current user then do not allow action 
