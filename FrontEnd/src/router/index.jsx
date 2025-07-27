@@ -6,6 +6,7 @@ import Layout from './Layout';
 import PostDetailPage from "../components/PostDetailPage/PostDetailPage";
 import TestLike from "../components/LikeButton/TestLike";
 import PostFormModal from '../components/PostFormModal/PostFormModal';
+// import OwnerPostPage from '../components/OwnerPostPage/OwnerPostPage';
 
 export const router = createBrowserRouter([
   {
@@ -35,11 +36,12 @@ export const router = createBrowserRouter([
         path: "/create",
         element: <PostFormModal />
       },
-      // Test for profile page
-      {
-        path: "/profile",
-        element: <PostDetailPage />
-      }
+// Profile page
+// JACOB if you want to repupose this seciton for the profilePage
+      // {
+      //   path: "/profile",
+      //   element: <OwnerPostPage />
+      // }
 
     ],
   },
