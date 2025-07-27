@@ -8,17 +8,14 @@ const REMOVE_LIKE = "likes/REMOVE";
 
 
 //action creators
-const loadLikes = (likes) => ({ type: LOAD_LIKES, likes });
-const addLike = (like) => ({ type: ADD_LIKE, like });
-const removeLike = (likeId) => ({ type: REMOVE_LIKE, likeId });
-
+const loadLikes = (payload) => ({ type: LOAD_LIKES, ...payload });
 
 //thunks
 export const fetchLikes = (postId) => async (dispatch) => {
   const res = await fetch(`/api/likes/${postId}`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadLikes(data));
+    dispatch(loadLikes({ postId, likes: data.likes || data }));
   }
 };
 
@@ -29,40 +26,84 @@ export const createLike = (postId) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const data = await response.json();
-    dispatch(addLike(data));
+    dispatch(fetchLikes(postId)); 
   }
 };
 
-export const deleteLike = (postId, likeId) => async (dispatch) => {
+export const deleteLike = (postId) => async (dispatch) => {
   const res = await fetch(`/api/likes/${postId}`, {
   method: "DELETE",
 });
   if (res.ok) {
-    dispatch(removeLike(likeId));
+    dispatch(fetchLikes(postId));
   }
 };
 
 //reducer
-const initialState = {};
+const initialState = {byPostId: {}};
 
 export default function likesReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_LIKES: {
-      const newState = {};
-      action.likes.forEach((like) => {
-        newState[like.id] = like;
-      });
-      return newState;
+      const { postId, likes } = action;
+      return {
+        ...state,
+        byPostId: {
+          ...state.byPostId,
+          [postId]: likes.reduce((acc, like) => {
+            acc[like.id] = like;
+            return acc;
+          }, {})
+        }
+      };
     }
-    case ADD_LIKE:
-      return { ...state, [action.like.id]: action.like };
+    case ADD_LIKE: {
+      const { post_id, id } = action.like;
+      return {
+        ...state,
+        byPostId: {
+          ...state.byPostId,
+          [post_id]: {
+            ...(state.byPostId[post_id] || {}),
+            [id]: action.like
+          }
+        }
+      };
+    }
     case REMOVE_LIKE: {
-      const newState = { ...state };
-      delete newState[action.likeId];
-      return newState;
+      const { postId, likeId } = action;
+      const postLikes = { ...(state.byPostId[postId] || {}) };
+      delete postLikes[likeId];
+      return {
+        ...state,
+        byPostId: {
+          ...state.byPostId,
+          [postId]: postLikes
+        }
+      };
     }
     default:
       return state;
   }
 }
+
+//selectors
+export const selectLikesForPost = (postId) => (state) => {
+  return state.likes.byPostId[postId] 
+    ? Object.values(state.likes.byPostId[postId])
+    : [];
+};
+
+export const selectLikeCountForPost = (postId) => (state) => {
+  return state.likes.byPostId[postId]
+    ? Object.keys(state.likes.byPostId[postId]).length
+    : 0;
+};
+
+export const selectUserLikeForPost = (postId, userId) => (state) => {
+  if (!userId || !state.likes.byPostId[postId]) return null;
+  return Object.values(state.likes.byPostId[postId]).find(
+    like => like.user_id === userId
+  ) || null;
+};
+
