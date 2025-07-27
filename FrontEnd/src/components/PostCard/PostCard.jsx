@@ -8,13 +8,13 @@ import LikeButton from "../LikeButton";
 import './PostCard.css';
 
 const PostCard = ({ post }) => {
-  if (!post) return null; 
+  if (!post) return null;
 
   return (
-    <Link to={`/posts/${post.id}`} className="post-card"> 
+    <Link to={`/posts/${post.id}`} className="post-card">
       <img src={post.post_img_url} alt={post.post_title} />
       <div className="post-title">{post.post_title}</div>
-      <div className="post-body">{post.post_body}</div>
+      {/* <div className="post-body">{post.post_body}</div> */}
       <div className="like-button-container">
         <LikeButton postId={post.id} />
       </div>

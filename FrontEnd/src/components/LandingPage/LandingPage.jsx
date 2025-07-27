@@ -33,40 +33,48 @@ const LandingPage = () => {
 
     return (
         <>
-            <h1 className="browse-post-title">Browse Posts</h1>
-        <div className="landing-container">
-             {/* Logo -> Explore -> Sign Up and Log In button -> Column Div */}
-            <div className = "logoColumn">
-            {/* Title and Create Post Button -> Horizontal Div */}
-            <FaRegCompass /> <button>Explore</button>
-            <button>Create a Post</button>
-            </div>
-
-            {/* IMAGE DISPLAY BLOCKs */}
-            {/* IMAGE WRAPPER */}
-            <div className="image-wrapper">
-                {/* Main Large Post Left */}
-                <div className="mainImgSection">
-                    {/* <h1>Main Image</h1> */}
-                    <div className ='mainGridImg'>
-                        <div className ='mainImg-card'>
-                            {
-                                <img src={ selectedImage } alt={ postsArr.post_title[randomIndex] } />
-                            }
+            <div className="landing-container">
+                {/* Sidebar */}
+                <div className="logoColumn">
+                    <div className="logoWrapper">
+                        <div className="logoImg">
+                        <img src="ReelQuotesLogo.gif" />
                         </div>
                     </div>
-                </div>
-                {/* Display small posts 2 Rows and 3 post per Row */}
-                <div className="smallImgSection">
-                    {/* <h1>Small images</h1> */}
-                        <div className='grid'>
-                           {postsArr.slice(0, 6).map((post) =>
-                                post ? <PostCard key={post.id} post={post} /> : null
-                            )}
+
+                    <div className="navButtons">
+                        <FaRegCompass />
+                        <button>Explore</button>
+                        <button>Create a Post</button>
+                    </div>
+                    </div>
+
+                {/* Main Content */}
+                <div className="main-content">
+                    <h1 className="browse-post-title">Browse Posts</h1>
+
+                <div className="image-wrapper">
+                    <div className="mainImgSection">
+                    <div className="mainGridImg">
+                        <div className="mainImg-card">
+                        <img src={selectedImage} />
                         </div>
+                    </div>
+                    </div>
+
+                    <div className="smallImgSection">
+                    <div className="grid">
+                        {postsArr
+                            .sort(() => 0.5 - Math.random()) // randomly shuffle
+                            .slice(0, 6)                     // take first 6 random images
+                            .map((post) =>
+                                post ? <PostCard key={post.id} post={post} /> : null
+                        )}
+                    </div>
+                    </div>
+                </div>
                 </div>
             </div>
-        </div>
         </>
     )
 }

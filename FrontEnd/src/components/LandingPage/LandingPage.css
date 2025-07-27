@@ -1,36 +1,93 @@
+html, body, ul {
+    margin: 0;
+    padding: 0;
+    height: 110%;
+}
+
 .landing-container {
     display: flex;
     flex-direction: row;
+    height: 100vh; /* full viewport height */
+    /* padding-top: 120px; */
+
 }
 
 .logoColumn {
 
-    width: 220px;
+    /* width: 220px;
     height: 100vh;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
     border-right: 2px solid #000000;
+    position: fixed; */
+
+    border-right: 2px solid #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;           /* fixed width */
+    height: 100vh;
+    padding: 20px;
+    /* background-color: white; */
+    z-index: 100;
+
+
+}
+
+.logoWrapper {
+    /* flex-grow: 1; */
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+}
+
+.logoImg img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}
+
+.navButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-content {
+    /* flex: 1; */
+    /* padding: 40px; */
+    /* padding-top: 60px; */
+    /* overflow-y: auto; */
+    position: absolute;
+    margin-left: 220px;
+    padding-top: 60px;
+    overflow-y: auto;
+    padding-left: 70px;
 }
 
 .browse-post-title {
-    width: 100%;
     /* margin-bottom: 20px; */
     font-size: 40px;
+    margin-bottom: 20px;
+    /* border-top: 2px solid #000000; */
+    /* width: 100%; */
     /* text-align: left; */
-    padding-left: 300px;
+    /* padding-left: 70px; */
+    /* padding-top: 40px; */
+    /* width: 100%; */
 }
 .image-wrapper {
 
     display: flex;
-    /* top align */
     align-items: flex-start;
-    gap: 20px; /* spacing between large and small image sections */
-    /* margin-top: 20px; */
-    padding-left: 40px;
+    gap: 20px;
+    /* padding-left: 70px; */
+
 }
 
 .mainImgSection {
@@ -60,8 +117,8 @@
 
 .mainImg-card {
 
-    width: 400px;
-    height: 400px;
+    width: 550px;
+    height: 960px;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -90,16 +147,16 @@
 }
 
 .post-card {
-    width: 200px;
-    height: 200px;
+    width: 240px;
+    height: 450px;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .post-card img {
-    width: 100%;
-    height: 100%;
+    width: 2%;
+    height: 2%;
     object-fit: cover;
     display: block;
 }
