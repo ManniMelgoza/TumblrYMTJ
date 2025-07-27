@@ -15,17 +15,16 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    
+
     # Relationships
     likes = db.relationship("Like", back_populates="user", cascade="all, delete-orphan")
     following = db.relationship("Follow", foreign_keys=[Follow.follower_id], back_populates="follower", cascade="all, delete-orphan")
     followers = db.relationship("Follow", foreign_keys=[Follow.following_id], back_populates="following", cascade="all, delete-orphan")
     comments = db.relationship("Comment", back_populates="user", cascade="all, delete-orphan")
     post = db.relationship("Post", back_populates="user", cascade="all")
-    
+
     # JOINING in the value of posts a column name magically being made in the user table to be able to access data but not visible in schema
-    # Column varibale = db.relationship("WHAT TABLE WE WANT THE DATA TO COME FROM", back_populates="must match in the user or model you want to look at for data")
-    # delete-orphan: if
+    # Column varibale name = db.relationship("WHAT TABLE WE WANT THE DATA TO COME FROM", back_populates="must match in the user or model you want to look at for data")
 
     @property
     def password(self):

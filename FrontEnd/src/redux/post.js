@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 //   ACTIONS
 // **********************************
 const GET_ALL_POSTS = 'posts/getAllPosts';
-// const CREATE_POST = 'posts/createPost';
+const CREATE_POST = 'posts/createPost';
 // const EDIT_POST = 'posts/editPost';
 // const DELETE_POST = 'posts/deletePost';
 
@@ -15,19 +15,19 @@ const getAllPosts = (posts) => ({
     payload: posts
 });
 
-// const createPost = (newPost) => ({
-//     type: CREATE_POST,
-//     payload: newPost
-// });
+const createPost = (newPost) => ({
+    type: CREATE_POST,
+    payload: newPost
+});
 
 // const editPost = (editPost) => ({
 //     type: EDIT_POST,
 //     payload: editPost
 // });
 
-// const deletePost = (spot_id) => ({
+// const deletePost = (post_id) => ({
 //     type: DELETE_POST,
-//     payload: spot_id
+//     payload: post_id
 // });
 
 // *********************************
@@ -36,10 +36,9 @@ const getAllPosts = (posts) => ({
 export const thunkGetAllPosts = () =>  async (dispatch) => {
 
     try{
-        // const response = await fetch("/api/spots", {
-        const response = await csrfFetch("/api/posts", {
-            method: "GET"
-        });
+        // const response = await fetch("/api/posts", {
+        const response = await csrfFetch("/api/posts");
+
         if (response.ok){
             const postsData = await response.json();
             dispatch(getAllPosts(postsData.Posts))
@@ -57,30 +56,30 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
     }
 };
 
-// export const thunkCreatePost = () => async (dispatch) => {
+export const thunkCreatePost = () => async (dispatch) => {
 
-//     try {
-//         const response = await fetch("api/spots/create");
-//             if (response.ok) {
-//                 const createSpotData = await response.json();
-//                 dispatch(createPost(createSpotData));
-//                 return createSpotData;
-//             }
-//             else{
-//                 const error = await response.json();
-//                 return { error: error.errors || ["Not able to create post"] };
-//             }
-//         } catch (err) {
-//             console.error('Error creating post', err);
-//             return { "error": "Unable to create the post"}
-//     }
-// };
+    try {
+        const response = await fetch("api/posts/create");
+            if (response.ok) {
+                const createSpotData = await response.json();
+                dispatch(createPost(createSpotData));
+                return createSpotData;
+            }
+            else{
+                const error = await response.json();
+                return { error: error.errors || ["Not able to create post"] };
+            }
+        } catch (err) {
+            console.error('Error creating post', err);
+            return { "error": "Unable to create the post"}
+    }
+};
 
 // export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
 //     try{
-//         const response = await fetch(`api/spots/${post_id}}/edit`, {
-//             method: "ACTIONS",
+//         const response = await fetch(`api/posts/${post_id}}/edit`, {
+//             method: "PUT",
 //             headers: { 'Content-Type': 'application/json' },
 //             body: JSON.stringify(postEdit)
 //         });
@@ -98,14 +97,14 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
 //     }
 // };
 
-// export const thinkDeletePost = (spot_id) => async (dispatch) => {
+// export const thinkDeletePost = (post_id) => async (dispatch) => {
 
 //     try {
-//         const response = await fetch (`api/spots/${spot_id}`,{
+//         const response = await fetch (`api/posts/${post_id}`,{
 //             method: 'DELETE'
 //         });
 //         if (response.ok) {
-//             dispatch(deletePost(spot_id))
+//             dispatch(deletePost(post_id))
 //             return deletePost;
 //         } else {
 //             const error = await response.json();
@@ -129,11 +128,11 @@ function postsReducer(state = initialState, action) {
             action.payload.forEach((post) => (newState[post.id] = post));
             return newState;
         }
-        // case CREATE_POST: {
-        //     const newState = { ...state };
-        //     newState[action.payload.id] = { ...action.payload }
-        //     return newState;
-        // }
+        case CREATE_POST: {
+            const newState = { ...state };
+            newState[action.payload.id] = { ...action.payload }
+            return newState;
+        }
         // case EDIT_POST:{
         //     return { ...state, [action.payload.id]: action.payload };
         // }

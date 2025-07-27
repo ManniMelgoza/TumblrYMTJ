@@ -1,26 +1,26 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Like, Post
+from app.models import db, Like, User
 
 like_routes = Blueprint('likes', __name__)
 
 # GET route to pull all likes on a post
 @like_routes.route('/<int:post_id>', methods=['GET'])
 def get_likes(post_id):
-    """
-    Get all likes for a specific post.
-    """
-    likes = Like.query.filter_by(post_id=post_id).all()
-    return jsonify([like.to_dict() for like in likes])
-
+    likes = Like.query.filter_by(post_id=post_id).join(User).all()
+    return [{
+        "id": like.id,
+        "post_id": like.post_id,
+        "user": {
+            "id": like.user.id,
+            "username": like.user.username
+        }
+    } for like in likes]
 
 # POST route to add a new like (toggle behavior optional)
 @like_routes.route('/<int:post_id>', methods=['POST'])
 @login_required
 def like_post(post_id):
-    """
-    Like a post.
-    """
     existing_like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
     #check if a user has liked the post yet
 
@@ -28,37 +28,38 @@ def like_post(post_id):
         # Already liked > remove the like
         db.session.delete(existing_like)
         db.session.commit()
-        return jsonify({
+        return {
             "liked": False,
             "post_id": post_id,
-            "user_id": current_user.id,
-            "like_id": None
-        }), 200
+            "user": {
+                "id": current_user.id,
+                "username": current_user.username
+            }
+        }
+
     
     #if a post hasnt been liked yet, then create the like
     new_like = Like(user_id=current_user.id, post_id=post_id)
     db.session.add(new_like)
     db.session.commit()
-    return jsonify({
+    return {
         "liked": True,
         "post_id": post_id,
-        "user_id": current_user.id,
+        "user": {
+            "id": current_user.id,
+            "username": current_user.username
+        },
         "like_id": new_like.id
-    }), 200
+    }
 
 
 # DELETE route to remove a like
 @like_routes.route('/<int:post_id>', methods=['DELETE'])
 @login_required
 def unlike_post(post_id):
-    """
-    Unlike a post.
-    """
     like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
-
     if not like:
-        return jsonify({"error": "Like does not exist"}), 404
-
+        return {"error": "Like does not exist"}, 404
     db.session.delete(like)
     db.session.commit()
     return {"message": "Like removed"}

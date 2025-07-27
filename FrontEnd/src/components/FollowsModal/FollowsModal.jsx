@@ -2,30 +2,6 @@ import { useState, useEffect } from 'react';
 import './FollowsModal.css';
 
 function FollowsModal({ isOpen, onClose, userId }) {
-    // Remove this line - it's not needed since you have isOpen prop
-    // const [showModal, setShowModal] = useState(true);
-    
-    // State management
-    const [activeTab, setActiveTab] = useState('following');
-    const [followingUsers, setFollowingUsers] = useState([]);
-    const [followersUsers, setFollowersUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    // Mock data for testing
-    const mockFollowing = [
-        { id: 1, username: 'john_doe' },
-        { id: 2, username: 'jane_smith' },
-        { id: 3, username: 'mike_wilson' },
-        { id: 4, username: 'sarah_connor' }
-    ];
-
-    const mockFollowers = [
-        { id: 5, username: 'alex_brown' },
-        { id: 6, username: 'emma_davis' },
-        { id: 7, username: 'chris_evans' },
-        { id: 8, username: 'natasha_romanoff' },
-        { id: 9, username: 'tony_stark' }
-    ];
 
     // Load data when modal opens
     useEffect(() => {
