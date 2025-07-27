@@ -13,6 +13,10 @@ function Comments({ postId }) { // creating a function that will take in a postI
 
     useEffect(() => {
         if (postId) dispatch(getCommentsByPostId(postId)); 
-    }, [dispatch, postId]); 
+    }, [dispatch, postId]); // when the component mounts or when postId changes, it will get all the comments for that post
+
+    const handleCreate = (e) => { 
+        e.preventDefault()
+    }
 
 }
