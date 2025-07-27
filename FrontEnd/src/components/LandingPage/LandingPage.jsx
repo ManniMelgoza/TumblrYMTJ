@@ -1,6 +1,6 @@
 
 // import { useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllPosts } from "../../redux/post";
 import './LandingPage.css';
@@ -14,9 +14,9 @@ const LandingPage = () => {
     const dispatch = useDispatch();
 
     const postsList = useSelector((state) => state.posts);
-    console.log('Post List', postsList);
+    // console.log('Post List', postsList);
     const postsArr = Object.values(postsList);
-    console.log('All the posts', postsArr);
+    // console.log('All the posts', postsArr);
 
     useEffect(() => {
         dispatch(thunkGetAllPosts());
@@ -24,12 +24,12 @@ const LandingPage = () => {
 
 // Random Image Selector Section
     const postImagesList = postsArr.map(post => post.post_img_url).filter(Boolean);
-    console.log('POST IMG LIST', postImagesList)
+    // console.log('POST IMG LIST', postImagesList)
 
     const randomIndex = Math.floor(Math.random() * postsArr.length);
-    console.log('Rand Indx', randomIndex)
+    // console.log('Rand Indx', randomIndex)
     const selectedImage = postImagesList[randomIndex];
-    console.log('SELECTED IMG', selectedImage)
+    // console.log('SELECTED IMG', selectedImage)
 
     return (
         <>
@@ -43,9 +43,14 @@ const LandingPage = () => {
                     </div>
 
                     <div className="navButtons">
-                        <FaRegCompass />
-                        <button>Explore</button>
-                        <button>Create a Post</button>
+
+                        <Link to="/" className="newSpotLink">
+                        <FaRegCompass /> Explore
+                        </Link>
+                        {/* TODO: When figure out how to show this only when the user is loged in */}
+                        {/* <Link to="/create" className="newSpotLink">
+                            Create a Post
+                        </Link> */}
                     </div>
                     </div>
 

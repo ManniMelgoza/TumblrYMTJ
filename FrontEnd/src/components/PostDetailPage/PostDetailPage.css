@@ -1,0 +1,88 @@
+/*
+.main-content {
+
+    position: absolute;
+    margin-left: 220px;
+    padding-top: 60px;
+    overflow-y: auto;
+    padding-left: 70px;
+}
+
+.browse-post-title {
+    font-size: 40px;
+    margin-bottom: 20px;
+} */
+
+
+.main-content {
+    background-color: #ffffff; /* Or any color you prefer */
+    border: 1px solid #8a1c1c; /* Optional border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 700px; /* Control container width */
+    margin: 20px auto; /* Center the box */
+}
+
+.browse-post-title {
+    margin-top: 0; /* Remove default margin from h1 */
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 2rem;
+}
+
+.main-content p {
+    line-height: 1.6;
+    color: #666;
+    margin: 20px 0;
+}
+
+/* Image styling for smaller size without losing resolution */
+.main-content img {
+    width: 300px; /* Fixed width */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Crops to fit without distortion */
+    border-radius: 8px;
+    margin: 20px auto;
+    display: block;
+}
+
+
+.logoColumn {
+
+    /* width: 220px;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #000000;
+    position: fixed; */
+
+    border-right: 2px solid #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 620px;           /* fixed width */
+    height: 100vh;
+    padding: 20px;
+    /* background-color: white; */
+    z-index: 100;
+
+
+}
+
+.logoWrapper {
+    /* flex-grow: 1; */
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+}
+
+.logoImg img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}

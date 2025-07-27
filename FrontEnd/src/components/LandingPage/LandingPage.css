@@ -152,7 +152,7 @@ html, body, ul {
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    background-color: rgb(132, 133, 134);
+    background-color: rgb(56, 103, 150);
 }
 
 .post-card img {
@@ -160,4 +160,17 @@ html, body, ul {
     height: 2%;
     object-fit: cover;
     display: block;
+}
+
+
+.newSpotLink {
+    background-color: rgb(54, 153, 210);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+   /* display: grid; */
+    /* grid-template-columns: repeat(2, 1fr); */
 }
