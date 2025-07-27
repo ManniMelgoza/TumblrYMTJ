@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaRegCompass } from "react-icons/fa";
 import { useEffect } from "react";
 import { thunkGetAllPosts } from "../../redux/post";
+import Comments from "../Comments/Comments"; 
 import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
@@ -65,22 +66,6 @@ const PostDetailPage = () => {
         <img src={post?.post_img_url} alt={post?.post_title} />
         <p>{post?.post_body}</p>
         <LikeButton postId={post?.id} />
-        {sessionUser && post?.owner_id === sessionUser.id && (
-        <button 
-        onClick={handleDelete}
-        style={{
-         backgroundColor: 'red',
-         color: 'white',
-         padding: '10px 16px',
-         fontWeight: 'bold',
-         borderRadius: '6px',
-         border: 'none'
-  }}
->
-  Delete Post
-</button>
-        )}
-
       </div>
     </div>
   );
