@@ -15,39 +15,32 @@ function LoginFormModal() {
     const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const serverResponse = await dispatch(
-      thunkLogin({
-        email,
-        password,
-      })
-    );
+  const data = await dispatch(thunkLogin({ email, password }));
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      closeModal();
-    }
-  };
+  if (data?.errors) {
+    setErrors(data.errors);
+  } else {
+    closeModal();
+  }
+};
+
 
 
   const handleSubmitDEMO = async () => {
+  const data = await dispatch(thunkLogin({
+    email: "demo@aa.io",
+    password: "password"
+  }));
 
-    const serverResponseDEMO = await dispatch(
-    thunkLogin({
-      email: "demo@aa.io",
-      password: 'password'
-    })
-  );
-
-    if (serverResponseDEMO) {
-      setErrors(serverResponseDEMO);
-    } else {
-      closeModal();
-      navigate("/");
-    }
-  };
+  if (data?.errors) {
+    setErrors(data.errors);
+  } else {
+    closeModal();
+    navigate("/");
+  }
+};
 
   return (
     <>

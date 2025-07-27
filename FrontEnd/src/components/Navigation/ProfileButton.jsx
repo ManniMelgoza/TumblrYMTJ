@@ -48,6 +48,9 @@ function ProfileButton() {
     const goToProfile = () => {
       navigate('/profile');
     }
+
+
+  console.log("Current user:", user);
   return (
     <>
       {/* <button onClick={toggleMenu}>
