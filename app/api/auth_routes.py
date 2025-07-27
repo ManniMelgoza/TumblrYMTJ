@@ -44,7 +44,7 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return current_user.email
+        return user.to_dict()
     return form.errors, 401
 
 # TODO WHEN THERE IS NO METHOD ARG DEFAULT TO A GET
