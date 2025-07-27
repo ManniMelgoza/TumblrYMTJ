@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_POSTS = 'posts/getAllPosts';
 const GET_CURRENT_USERS_POSTS = 'posts/currentUserPosts';
 const CREATE_POST = 'posts/createPost';
+const GET_USER_POSTS = 'posts/getUserPosts'; 
 // const EDIT_POST = 'posts/editPost';
 // const DELETE_POST = 'posts/deletePost';
 
@@ -20,6 +21,11 @@ const createPost = (newPost) => ({
     type: CREATE_POST,
     payload: newPost
 });
+
+const getUserPosts = (posts) => ({
+    type: GET_USER_POSTS,
+    payload: posts
+}); 
 
 // const editPost = (editPost) => ({
 //     type: EDIT_POST,
@@ -76,6 +82,24 @@ export const thunkCreatePost = () => async (dispatch) => {
     }
 };
 
+export const thunkGetUserPosts = () => async (dispatch) => {
+    try {
+        const response = await csrfFetch('/api/posts/current'); 
+
+        if (response.ok) {
+            const data = await response.json(); // { Posts: [our posts]}
+            dispatch(getUserPosts(data.Posts)); 
+            return data;
+        } else {
+            const error = await response.json(); 
+            return { error: error.errors || ['Unable to fetch your posts'] }; 
+        }
+    } catch (err) {
+        console.error("Error fetching current user's posts", err); 
+        return { error: "Something went wrong while fetching your posts" }; 
+    }
+}; 
+
 // export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
 //     try{
@@ -126,13 +150,20 @@ function postsReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_POSTS: {
             const newState = {};
-            action.payload.forEach((post) => (newState[post.id] = post));
+            action.payload.forEach((post) => (newState[post.id] = post)); // the purple parantheses may have to be curly braces 
             return newState;
         }
         case CREATE_POST: {
             const newState = { ...state };
             newState[action.payload.id] = { ...action.payload }
             return newState;
+        }
+        case GET_USER_POSTS: {
+            const newState = {}; 
+            action.payload.forEach((post) => {
+                newState[post.id] = post; 
+            }); 
+            return newState; 
         }
         // case EDIT_POST:{
         //     return { ...state, [action.payload.id]: action.payload };
