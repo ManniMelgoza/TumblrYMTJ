@@ -12,7 +12,7 @@ const DELETE_COMMENT = 'comments/DELETE_COMMENT';
 const loadComments = (comments) => ({ type: LOAD_COMMENTS, comments });
 const addComment = (comment) => ({ type: ADD_COMMENT, comment }); 
 const updateComment = (comment) => ({ type: UPDATE_COMMENT, comment }); 
-const deleteComment = (comment) => ({ type: DELETE_COMMENT, commentId }); 
+const deleteComment = (commentId) => ({ type: DELETE_COMMENT, commentId }); 
 
 // STEP 3: Establishing our ----------------- THUNKS --------------------------------
 

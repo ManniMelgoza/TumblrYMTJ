@@ -6,7 +6,10 @@ import { getCommentsByPostId, createComment, editComment, removeComment } from '
 function Comments({ postId }) { // creating a function that will take in a postId prop so it knows which post's comments to show 
     // setting up some initial variables to generate actions to our store and for fetching data
     const dispatch = useDispatch(); 
-    const comments = useSelector(state => Object.values(state.commets)); 
+    // const comments = useSelector(state => Object.values(state.comments)); 
+    // const currentUser = useSelector(state => state.session.user); 
+    const commentsList = useSelector((state) => state.comments); 
+    const commentsArr = Object.values(commentsList); 
     const [newComment, setNewComment] = useState(''); 
     const [editId, setEditId] = useState(null); 
     const [editBody, setEditBody] = useState(''); 
@@ -24,7 +27,57 @@ function Comments({ postId }) { // creating a function that will take in a postI
 
     const startEditing = (comment) => {
         setEditId(comment.id); 
-        setEditBody(comment.comment_body);
+        setEditBody(comment.comment_body); // calss when the user clicks "Edit" - it enables the edit form 
     }; 
 
+    const handleEdit = (e) => {
+        e.preventDefault(); 
+        dispatch(editComment(editId, { comment_body: editBody }));
+        setEditId(null); 
+        setEditBody('');
+    };  // this should submit the edited comment and calls redux to update the backend then resets the edit state
+
+    const handleDelete = (commentId) => {
+        dispatch(removeComment(commentId)); 
+    };
+
+    return (
+        <div className="comments-section">
+            <form onSubmit={handleCreate} className="comment-form">
+                <textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Add a comment..."
+                />
+                <button type="submit">Post Comment</button>
+            </form>
+    
+            <div className="comments-list">
+                {commentsArr?.map(comment => (
+                    <div key={comment.id} className="comment">
+                        {editId === comment.id ? (
+                            <form onSubmit={handleEdit}>
+                                <textarea
+                                    value={editBody}
+                                    onChange={(e) => setEditBody(e.target.value)}
+                                />
+                                <button type="submit">Save</button>
+                                <button type="button" onClick={() => setEditId(null)}>Cancel</button>
+                            </form>
+                        ) : (
+                            <>
+                                <p>{comment.comment_body}</p>
+                                <button onClick={() => startEditing(comment)}>Edit</button>
+                                <button onClick={() => handleDelete(comment.id)}>Delete</button>
+                            </>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
 }
+
+export default Comments
+

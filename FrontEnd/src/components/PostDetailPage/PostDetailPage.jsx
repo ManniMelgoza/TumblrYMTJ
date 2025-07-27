@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaRegCompass } from "react-icons/fa";
 import { useEffect } from "react";
 import { thunkGetAllPosts } from "../../redux/post";
+import Comments from "../Comments/Comments"; 
 
 const PostDetailPage = () => {
   const { postId } = useParams();
@@ -42,6 +43,7 @@ const PostDetailPage = () => {
         <img src={post?.post_img_url} alt={post?.post_title} />
         <p>{post?.post_body}</p>
         <LikeButton postId={post?.id} />
+        <Comments postId={post?.id} />
       </div>
     </div>
   );
