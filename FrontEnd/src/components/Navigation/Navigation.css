@@ -1,3 +1,7 @@
 .profile-dropdown {
   position: absolute;
 }
+
+li {
+  list-style-type: none;
+}
