@@ -104,7 +104,7 @@ export const thunkCreatePost = (postData) => async (dispatch) => {
     }
 };
 
-export const thunkGetUserPosts = () => async (dispatch) => {
+export const thunkGetUserPosts = (userId) => async (dispatch) => {
     try {
         const response = await csrfFetch('/api/posts/current');
 

@@ -18,7 +18,9 @@ const ProfilePage = () => {
     const currentUser = useSelector(state => state.session?.user);
 
     useEffect(() => {
+        if (userId) {
         dispatch(thunkGetUserPosts());
+        }
     }, [dispatch]);
 
     const { username, bio, followers_count = 0, following_count = 0 } = user || {};

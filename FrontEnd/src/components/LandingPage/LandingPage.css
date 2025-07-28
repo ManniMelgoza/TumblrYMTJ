@@ -12,6 +12,10 @@ html, body, ul {
 
 }
 
+.browse-post-title {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+}
 .logoColumn {
 
     /* width: 220px;

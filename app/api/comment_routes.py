@@ -116,7 +116,7 @@ def edit_comment(commentId): # we create a function which will allow us to edit 
 # now we have to delete a comment so we establish our route
 # same as edit route essentially because we need a postid and commentid
 # full API route with Blueprints is /api/comments/postId/delete/commentId
-@comment_routes.route('/<int:commentId>/delete')
+@comment_routes.route('/<int:commentId>/delete', methods=['DELETE'])
 @login_required # user must be logged in to perform this CRUD operation
 def delete_comment(commentId): # pass in our integers from our endpoint into our delete_comment function to ensure a valid deletion
 

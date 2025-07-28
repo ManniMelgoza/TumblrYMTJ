@@ -1,0 +1,73 @@
+.logoColumn {
+    background-color: black;
+    width: 220px;
+    height: 100vh;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* so sidebar stays fixed */
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  
+  .logoWrapper {
+    background: white;
+    padding: 1px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .logoImg img {
+    width: 250px;
+    height: auto;
+  }
+  
+  .navButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* center buttons horizontally */
+    gap: 20px;             /* spacing between buttons */
+    width: 100%;
+    margin-top: 40px;      /* add some space below logo */
+  }
+
+  .explore {
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: rgb(32, 163, 245);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    width: 170px;           /* consistent width like logo */
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .newSpotLink, .profileBtn {
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: white;
+    color: black;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    width: 200px;           /* consistent width like logo */
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .newSpotLink:hover {
+    background-color: rgb(231, 239, 243);
+    color: white;
+  }
