@@ -12,16 +12,50 @@ const ProfilePage = () => {
     const { userId } = useParams();
     const [showFollowsModal, setShowFollowsModal] = useState(false);
     const [followsModalType, setFollowsModalType] = useState('followers');
-    
+
     const userPosts = useSelector(state => Object.values(state.posts));
-    const user = useSelector(state => state.user?.profile || {});
     const currentUser = useSelector(state => state.session?.user);
 
     useEffect(() => {
-        dispatch(thunkGetUserPosts());
-    }, [dispatch]);
+        if (currentUser) {
+            dispatch(thunkGetUserPosts(currentUser.id));
+        }
+    }, [dispatch, currentUser]);
 
-    const { username, bio, followers_count = 0, following_count = 0 } = user || {};
+    if (!currentUser) {
+        return (
+            <div className="profile-layout">
+                <div className="left-section">
+                    <div className="logoImg">
+                        <img src="ReelQuotesLogo.gif" alt="Logo" />
+                    </div>
+                    <nav className="nav-buttons">
+                        <Link to="/" className="nav-link explorer-btn">
+                            <FaRegCompass className="nav-icon" />
+                            <span>Explorer</span>
+                        </Link>
+                    </nav>
+                </div>
+                <div className="main-content">
+                    <div className="error">Please log in to view your profile</div>
+                </div>
+            </div>
+        );
+    }
+
+    const {
+        username,
+        bio,
+        followers_count = 0,
+        following_count = 0,
+        followersCount = 0, 
+        followingCount = 0
+    } = currentUser;
+
+
+    const actualFollowersCount = followers_count || followersCount;
+    const actualFollowingCount = following_count || followingCount;
+
     const avatarLetter = username?.charAt(0).toUpperCase() || 'U';
     const postsCount = userPosts.length;
 
@@ -42,13 +76,13 @@ const ProfilePage = () => {
                 <div className="logoImg">
                     <img src="ReelQuotesLogo.gif" alt="Logo" />
                 </div>
-                
+
                 <nav className="nav-buttons">
                     <Link to="/" className="nav-link explorer-btn">
                         <FaRegCompass className="nav-icon" />
                         <span>Explorer</span>
                     </Link>
-                    
+
                     {currentUser && (
                         <Link to="/create" className="nav-link create-btn">
                             <FaPlus className="nav-icon" />
@@ -89,7 +123,7 @@ const ProfilePage = () => {
                                 onClick={handleFollowersClick}
                                 type="button"
                             >
-                                <span className="stat-number">{followers_count}</span>
+                                <span className="stat-number">{actualFollowersCount}</span>
                                 <span className="stat-label">followers</span>
                             </button>
                             <button
@@ -97,16 +131,10 @@ const ProfilePage = () => {
                                 onClick={handleFollowingClick}
                                 type="button"
                             >
-                                <span className="stat-number">{following_count}</span>
+                                <span className="stat-number">{actualFollowingCount}</span>
                                 <span className="stat-label">following</span>
                             </button>
                         </div>
-                    </div>
-
-                    <div className="profile-actions">
-                        <button className="follow-btn" type="button">
-                            Follow
-                        </button>
                     </div>
                 </div>
 
@@ -137,7 +165,7 @@ const ProfilePage = () => {
                 <FollowsModal
                     isOpen={showFollowsModal}
                     onClose={() => setShowFollowsModal(false)}
-                    userId={parseInt(userId)}
+                    userId={currentUser?.id}
                     initialTab={followsModalType}
                 />
             )}
