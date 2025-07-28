@@ -1,0 +1,127 @@
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  z-index: 1001;
+  font-family: 'Arial', sans-serif;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.tab-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.tab-button.active {
+  background-color: rgb(64,184,255);
+  color: white;
+}
+
+.modal-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  background-color: #ccc;
+  color: white;
+  font-weight: bold;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details .username {
+  font-weight: bold;
+}
+
+.user-actions button {
+  padding: 6px 12px;
+  background-color: rgb(64,184,255);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-actions button:hover {
+  background-color: #46addd;
+}
+
+.loading,
+.error,
+.empty-state {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.empty-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
