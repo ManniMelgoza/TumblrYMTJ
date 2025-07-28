@@ -40,7 +40,7 @@ def seed_posts():
 
             Post(owner_id = 3, post_title = "Back to the Future", post_body = "If you put your mind to it, you can accomplish anything.", post_img_url = "https://res.cloudinary.com/dnfeiduuu/image/upload/v1753603943/BacktotheFuture_aqqrsa.png"),
 
-            Post(owner_id = 1, post_title = "Bruce Lee", post_body = "A goal is not always meant to be reached; it often serves simply as something to aim at.", post_img_url = "https://res.cloudinary.com/dnfeiduuu/image/upload/v1753603943/BacktotheFuture_aqqrsa.png"),
+            Post(owner_id = 1, post_title = "Bruce Lee", post_body = "A goal is not always meant to be reached; it often serves simply as something to aim at.", post_img_url = "https://res.cloudinary.com/dnfeiduuu/image/upload/v1753603940/Bruce_Lee_bhe9ft.png"),
 
             Post(owner_id = 2, post_title = "The Exorcist", post_body = "Avoid conversations with the demon… He is a liar… do not listen.", post_img_url = "https://res.cloudinary.com/dnfeiduuu/image/upload/v1753603930/The_Excorcist_ca4zzy.png")
 

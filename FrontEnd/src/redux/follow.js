@@ -51,7 +51,7 @@ const initialState = {
 };
 
 const followReducer = (state = initialState, action) => {
-    switch (action_type) {
+    switch (action.type) {
         case LOAD_FOLLOWERS:
             return {
                 ...state,

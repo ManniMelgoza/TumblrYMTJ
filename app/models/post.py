@@ -27,6 +27,7 @@ class Post(db.Model, TimeStampMixin):
     def to_dict(self):
         return {
             'id': self.id,
+            'owner_id': self.owner_id,
             'post_title': self.post_title,
             'post_body': self.post_body,
             "post_img_url": self.post_img_url

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LikeButton from "../LikeButton";
 import { Link } from "react-router-dom";
@@ -6,15 +6,36 @@ import { FaRegCompass } from "react-icons/fa";
 import { useEffect } from "react";
 import { thunkGetAllPosts } from "../../redux/post";
 import Comments from "../Comments/Comments"; 
+import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
   const { postId } = useParams();
   const post = useSelector((state) => state.posts[postId]);
+  const loggedUser = useSelector((state) => state.session?.user);
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(thunkGetAllPosts());
   }, [dispatch]);
+
+  const handleDelete = async () => {
+  const confirmed = window.confirm("Are you sure you want to delete this post?");
+  if (!confirmed) return;
+
+  const response = await fetch(`/api/posts/${post.id}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    alert("Post deleted!");
+    navigate("/");
+  } else {
+    const data = await response.json();
+    alert(data?.Message || "Failed to delete the post.");
+  }
+};
 
   // Render the post when data is loaded
   return (
@@ -31,9 +52,11 @@ const PostDetailPage = () => {
           <Link to="/" className="newSpotLink">
             <FaRegCompass /> Explore
           </Link>
-          <Link to="/create" className="newSpotLink">
-            Create a Post
-          </Link>
+          {loggedUser && (
+            <Link to="/create" className="newSpotLink">
+              Create a Post
+            </Link>
+          )}
         </div>
       </div>
 
