@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux"
-import { useModal } from "../../context/Modal"
+// import { useDispatch } from "react-redux"
+// import { useModal } from "../../context/Modal"
 // TODO: Need to make sure the thunk naming here mathches the resux post file
-import { thunkGetAllPosts } from "../../redux/post"
+// import { thunkCreatePost } from "../../redux/post"
 import { useNavigate } from "react-router-dom";
 import "./PostFormModal.css";
 
 function PostFormModal() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
 
 
 
     const [postTitle, setPostTitle] = useState("");
     const [postBody, setpostBody] = useState("");
-    const [postImgUrl, postImgUrl] = useState("");
+    const [postImgUrl, setpostImgUrl] = useState("");
 
     const [errors, setErrors] = useState({});
-    const { closeModal } = useModal();
+    // const { closeModal } = useModal();
 
      // Helper function to check image URL endings
     function isValidImageURL(url) {
@@ -40,7 +40,7 @@ function PostFormModal() {
     if (!postBody) newErrors.postBody = 'Post Body is required';
     if (!postImgUrl) {
         newErrors.postImgUrl = 'Post Image URL is required';
-    } else if (!isValidImageURL(previewImage)) {
+    } else if (!isValidImageURL(postImgUrl)) {
         newErrors.previewImage = 'Preview image must end in .jpg, .jpeg, or .png';
     }
 
@@ -49,33 +49,22 @@ function PostFormModal() {
     }
 
 
-    const postData = {
-        postTitle,
-        postBody,
-        postImgUrl
-    }
+    // const postData = {
+    //     postTitle,
+    //     postBody,
+    //     postImgUrl
+    // }
 
     try {
-        const newPost = await dispatch(thunkCreatePost)
+        // const newPost = await dispatch(thunkCreatePost(postData))
+
+        navigate(`/`);
+    } catch (err) {
+        if (err.errors) setErrors(err.errors);
+        else console.error('Unexpected error:', err);
     }
-
-
-
-        const serverResponse = await dispatch(
-            thunkGetAllPosts({
-                // TODO PHIL : when we do our naaming converntion in the front end for the values that we are getting from the back and do they need to be the same stype diff from what we are currently working on
-                postTitle,
-                // postBody
-            })
-        );
-
-        if (serverResponse) {
-            setErrors(serverResponse);
-        }
-        else {
-            closeModal();
-        }
     };
+
     return (
         <>
             {errors.server && <p>{errors.server}</p>}
@@ -95,20 +84,20 @@ function PostFormModal() {
                     Post Body
                     <input
                     type="text"
-                    value={postTitle}
-                    onChange={(e) => setPostTitle (e.target.value)}
+                    value={postBody}
+                    onChange={(e) => setpostBody (e.target.value)}
                     />
                 </label>
-                {errors.postTitle && <p>{errors.postTitle}</p>}
+                {errors.postBody && <p>{errors.postBody}</p>}
                 <label>
                     Post URL
                     <input
                     type="text"
                     value={postTitle}
-                    onChange={(e) => setPostTitle (e.target.value)}
+                    onChange={(e) => setpostImgUrl (e.target.value)}
                     />
                 </label>
-                {errors.postTitle && <p>{errors.postTitle}</p>}
+                {errors.postImgUrl && <p>{errors.postImgUrl}</p>}
 
             </form>
         </>
