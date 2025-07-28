@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import LandingPage from '../components/LandingPage/LandingPage';
+import ProfilePage from '../components/ProfilePage/ProfilePage';
 import Layout from './Layout';
 import PostDetailPage from "../components/PostDetailPage/PostDetailPage";
 import TestLike from "../components/LikeButton/TestLike";
@@ -36,6 +37,7 @@ export const router = createBrowserRouter([
         path: "/create",
         element: <PostFormModal />
       },
+<<<<<<< HEAD
 // Profile page
 // JACOB if you want to repupose this seciton for the profilePage
       // {
@@ -43,6 +45,12 @@ export const router = createBrowserRouter([
       //   element: <OwnerPostPage />
       // }
 
+=======
+      {
+        path: "/profile",
+        element: <ProfilePage /> 
+      }
+>>>>>>> dev
     ],
   },
 ]);

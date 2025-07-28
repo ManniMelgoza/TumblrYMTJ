@@ -1,0 +1,108 @@
+/* ProfilePage.css - Social Media Style */
+.profile-page {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e8ed;
+}
+
+.profile-header {
+    padding: 32px;
+    border-bottom: 1px solid #e1e8ed;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #1da1f2, #14171a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.display-name {
+    margin: 0 0 4px 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #14171a;
+}
+
+.username {
+    margin: 0 0 12px 0;
+    font-size: 1rem;
+    color: #657786;
+}
+
+.bio {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #14171a;
+}
+
+.profile-stats {
+    display: flex;
+    padding: 0;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.stat-item {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    border-right: 1px solid #e1e8ed;
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.stat-button:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #14171a;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #657786;
+    font-weight: 400;
+}
