@@ -111,7 +111,7 @@ import { useState } from "react";
 import { useDispatch} from "react-redux"
 import { useModal } from "../../context/Modal"
 import { thunkCreatePost } from "../../redux/post"
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaRegCompass } from "react-icons/fa";
 
@@ -120,7 +120,7 @@ import "./PostFormModal.css";
 function PostFormModal() {
     const dispatch = useDispatch();
     // const loggedUser = useSelector((state) => state.session?.user);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { closeModal } = useModal();
 
     const [postTitle, setPostTitle] = useState("");
@@ -158,9 +158,9 @@ function PostFormModal() {
         }
 
         const postData = {
-            postTitle,
-            postBody,
-            postImgUrl
+            post_title: postTitle,
+            post_body: postBody,
+            post_img_url: postImgUrl
         }
 
         try {
@@ -170,13 +170,14 @@ function PostFormModal() {
                 setErrors(result.error);
             } else {
                 closeModal(); // Close the modal on successful creation
-                // navigate(`/`);
+                navigate(`/profile`);
             }
         } catch (err) {
             if (err.errors) setErrors(err.errors);
             else console.error('Unexpected error:', err);
         }
     };
+
 
     return (
     <>
