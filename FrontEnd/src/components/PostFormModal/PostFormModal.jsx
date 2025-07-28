@@ -11,14 +11,55 @@ function PostFormModal() {
     const navigate = useNavigate();
 
 
-    
+
     const [postTitle, setPostTitle] = useState("");
-    // const [postBody, setPostBody] = useState("");
+    const [postBody, setpostBody] = useState("");
+    const [postImgUrl, postImgUrl] = useState("");
+
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
+     // Helper function to check image URL endings
+    function isValidImageURL(url) {
+        return (
+        url.endsWith('.jpg') ||
+        url.endsWith('.jpeg') ||
+        url.endsWith('.png') ||
+        url.endsWith('.JPG') ||
+        url.endsWith('.JPEG') ||
+        url.endsWith('.PNG')
+        );
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+    const newErrors = {};
+
+    if (!postTitle) newErrors.postTitle = 'Post Title is required';
+    if (!postBody) newErrors.postBody = 'Post Body is required';
+    if (!postImgUrl) {
+        newErrors.postImgUrl = 'Post Image URL is required';
+    } else if (!isValidImageURL(previewImage)) {
+        newErrors.previewImage = 'Preview image must end in .jpg, .jpeg, or .png';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+        return setErrors(newErrors);
+    }
+
+
+    const postData = {
+        postTitle,
+        postBody,
+        postImgUrl
+    }
+
+    try {
+        const newPost = await dispatch(thunkCreatePost)
+    }
+
+
 
         const serverResponse = await dispatch(
             thunkGetAllPosts({
