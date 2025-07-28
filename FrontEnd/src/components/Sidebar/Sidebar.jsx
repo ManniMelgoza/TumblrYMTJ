@@ -28,7 +28,7 @@ const Sidebar = () => {
 
   const handleProfileClick = () => {
     if (loggedUser) {
-      navigate(`/profile/${loggedUser.id}`);
+      navigate('/profile');
     } else {
       setShowAuthPrompt(true);
     }

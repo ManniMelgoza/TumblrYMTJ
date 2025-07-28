@@ -20,7 +20,7 @@ function ManageDeleteSpotModal({ postId }) {
             onClick={handleDelete}
             style={{ color: "white", backgroundColor: "red" }}
         >
-            Yes (Delete Spot)
+            Yes (Delete Post)
         </button>
         <button
             onClick={closeModal}

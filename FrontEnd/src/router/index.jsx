@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         element: <PostFormModal />
       },
       {
-        path: "/profile/:userId",
+        path: "/profile",
         element: <ProfilePage />
       },
       {
