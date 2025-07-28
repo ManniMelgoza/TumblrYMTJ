@@ -1,5 +1,5 @@
-from flask import Blueprint, request  # removed jsonify - Yaseen 
-from app.models import Post, Comment, User, db # added Comment and User - Yaseen 
+from flask import Blueprint, request  # removed jsonify - Yaseen
+from app.models import Post, Comment, User, db # added Comment and User - Yaseen
 from app.forms import CreatePostForm, CreateCommentForm # added comment form - Yaseen
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -14,7 +14,7 @@ def all_posts():
     posts = Post.query.all()
     return {'Posts': [post.to_dict() for post in posts]}
 
-# ADDING ANOTHER GET ROUTE TO FETCH ALL POSTS OF A USER 
+# ADDING ANOTHER GET ROUTE TO FETCH ALL POSTS OF A USER
 # *********************************
 #       GET Current User's Posts Route
 # **********************************
@@ -23,7 +23,7 @@ def all_posts():
 def current_user_posts():
     # Fetch posts that belong to the logged-in user
     posts = Post.query.filter_by(owner_id=current_user.id).all()
-    
+
     # Return the posts in the expected response format
     return {'Posts': [post.to_dict() for post in posts]}
 
@@ -118,12 +118,12 @@ def all_comments(postId): # we begin a function that will retrieve all comments 
     View all comments on a post
     """
     # here we use the SQLAlchemy's filter_by to get all comments by the postId which should match a id in our post_id column in our comments table
-    comments = Comment.query.filter_by(post_id=postId).all() 
+    comments = Comment.query.filter_by(post_id=postId).all()
 
-    # Since Flask does not know how to turn Python objects into JSON on its own 
+    # Since Flask does not know how to turn Python objects into JSON on its own
     # We use jsonify to convert the python into this universal readable object aka JSON response
 
-    return ({'comments': [comment.to_dict() for comment in comments]}) 
+    return ({'comments': [comment.to_dict() for comment in comments]})
     # what this now does is it gives us a list (via to_dict) of comments under the key "comments": {{comment1}, {comment2}, {etc}}
 
 
@@ -144,16 +144,25 @@ def create_comment(postId): # defining our function name which requires a postId
 
     if form.validate_on_submit(): # if the form is properly submitted and all validations pass then
         new_comment = Comment(  # add it as "new_comment" via a Comment object, filling in the required fields
-            comment_body=form.data["comment_body"], # include comment body 
+            comment_body=form.data["comment_body"], # include comment body
             user_id=current_user.id, # associate the comment with the logged-in user
-            post_id=postId          # associate comment with the correct post 
+            post_id=postId          # associate comment with the correct post
         )
         db.session.add(new_comment) # if the comment is valid then add it and commit it
         db.session.commit() # Commit this new comment to the SQLAlchemy database
-        return (new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it 
+        return (new_comment.to_dict()), 200 # stays within the conditional gives output of new comment with username attached to it
     else:
         return {'errors': form.errors}, 400 # our errors object will output what we specified in our form fields
-        # example: 
+        # example:
         # {
         #   'comment_body': ["You gotta write a comment to leave a comment!"]
         # }
+
+@post_routes.route("/<int:post_id>", methods=['GET'])
+def get_single_post(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return {'Message': "Post not found"}, 404
+
+    return post.to_dict(), 200

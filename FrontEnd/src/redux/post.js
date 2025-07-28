@@ -7,6 +7,7 @@ const CREATE_POST = 'posts/createPost';
 const GET_USER_POSTS = 'posts/getUserPosts';
 const EDIT_POST = 'posts/editPost';
 const DELETE_POST = 'posts/deletePost';
+const GET_CURRENT_POST = 'posts/getCurrentPost'
 
 // *********************************
 //   ACTIONS CREATOR
@@ -36,6 +37,13 @@ const deletePost = (post_id) => ({
     payload: post_id
 });
 
+const getCurrentPost = (post) => {
+    return {
+        type: GET_CURRENT_POST,
+        payload: post
+    };
+};
+
 // *********************************
 //   THUNKS
 // **********************************
@@ -61,26 +69,6 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
         return {"error": "Unable to retrieve data"}
     }
 };
-
-// export const thunkCreatePost = () => async (dispatch) => {
-
-//     try {
-//         const response = await fetch("api/posts/create");
-//             if (response.ok) {
-//                 const createSpotData = await response.json();
-//                 dispatch(createPost(createSpotData));
-//                 return createSpotData;
-//             }
-//             else{
-//                 const error = await response.json();
-//                 return { error: error.errors || ["Not able to create post"] };
-//             }
-//         } catch (err) {
-//             console.error('Error creating post', err);
-//             return { "error": "Unable to create the post"}
-//     }
-// };
-
 
 export const thunkCreatePost = (postData) => async (dispatch) => {
     try {
@@ -122,30 +110,25 @@ export const thunkGetUserPosts = () => async (dispatch) => {
     }
 };
 
-export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
+export const thunkEditPost = (postId, postEdit) => async (dispatch) => {
 
-    try{
-        const response = await fetch(`api/posts/${post_id}}/edit`, {
-            method: "PUT",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postEdit)
-        });
-        if (response.ok) {
-            const editPostData = await response.json();
-            dispatch(editPost(editPostData))
-        } else {
-            const error = await response.json();
-            return { error: error.errors  || ["Unable to edit post"] };
-        }
+    const response = await csrfFetch(`/api/posts/${postId}/edit`, {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postEdit)
+    });
 
-    } catch (err) {
-        console.error("Error editing post", err);
-        return { 'error': 'Unable to edit post' }
+    if (response.ok) {
+        const editPostData = await response.json();
+        dispatch(editPost(editPostData));
+        return editPostData;  // ADD: return the data for success handling
+    } else {
+        const error = await response.json();
+        return { error: error.errors || ["Unable to edit post"] };
     }
-};
+}
 
 export const thunkDeletePost = (post_id) => async (dispatch) => {
-    try {
         // Fixed: Added leading slash and used csrfFetch for proper authentication
         const response = await csrfFetch(`/api/posts/${post_id}`, {
             method: 'DELETE'
@@ -154,19 +137,30 @@ export const thunkDeletePost = (post_id) => async (dispatch) => {
         if (response.ok) {
             // Fixed: Dispatch with post_id, not the action creator function
             dispatch(deletePost(post_id));
-
-            // Return success response
-            const result = await response.json();
-            return result;
+            return response;
         } else {
             const error = await response.json();
-            return { error: error.errors || ['Unable to delete post'] };
+            return { error: error.errors || ['Post Not DELETED']}
         }
-    } catch (err) {
-        console.error('Error deleting post', err);
-        return { error: 'Unable to delete post' }; // Fixed typo: was 'mable'
-    }
 };
+
+
+export const thunkCurrentPost = (postId) => async (dispatch) => {
+    try {  // ADD try-catch
+        const response = await csrfFetch(`/api/posts/${postId}`);
+        if (response.ok){
+            const updatePost = await response.json();
+            dispatch(getCurrentPost(updatePost));
+            return updatePost;
+        } else {
+            const error = await response.json();
+            return { error: error.errors || ['No Data Retrieved of current post to be edited']}
+        }
+    } catch (err) {  // ADD catch block
+        console.error("Error fetching current post", err);
+        return { error: 'Unable to fetch post data' };
+    }
+}
 
 // *********************************
 //   REDUCERS
@@ -199,6 +193,9 @@ function postsReducer(state = initialState, action) {
             const newState = { ...state };
             delete newState[action.payload];
             return newState;
+        }
+        case GET_CURRENT_POST: {
+            return { ...state, currentPost: action.payload};
         }
         default:
             return state;

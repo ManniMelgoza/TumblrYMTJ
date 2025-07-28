@@ -7,6 +7,7 @@ import Layout from './Layout';
 import PostDetailPage from "../components/PostDetailPage/PostDetailPage";
 import TestLike from "../components/LikeButton/TestLike";
 import PostFormModal from '../components/PostFormModal/PostFormModal';
+import EditPostModal from '../components/EditPostModal/EditPostModal';
 // import OwnerPostPage from '../components/OwnerPostPage/OwnerPostPage';
 
 export const router = createBrowserRouter([
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         element: <ProfilePage />
+      },
+      {
+        path: "/:postId/edit",
+        element: <EditPostModal />
       }
     ],
   },

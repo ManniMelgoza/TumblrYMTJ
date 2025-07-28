@@ -9,7 +9,8 @@ function ManageDeleteSpotModal({ postId }) {
     const handleDelete = (e) => {
     e.preventDefault();
 
-    return dispatch(thunkDeletePost(postId)).then(closeModal);
+    return dispatch(thunkDeletePost(postId))
+    .then(closeModal);
     };
     return (
         <>
