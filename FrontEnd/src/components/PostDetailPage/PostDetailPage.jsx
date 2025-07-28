@@ -10,6 +10,7 @@ import "./PostDetailPage.css";
 const PostDetailPage = () => {
   const { postId } = useParams();
   const post = useSelector((state) => state.posts[postId]);
+  const loggedUser = useSelector((state) => state.session?.user);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const navigate = useNavigate();
@@ -50,9 +51,11 @@ const PostDetailPage = () => {
           <Link to="/" className="newSpotLink">
             <FaRegCompass /> Explore
           </Link>
-          <Link to="/create" className="newSpotLink">
-            Create a Post
-          </Link>
+          {loggedUser && (
+            <Link to="/create" className="newSpotLink">
+              Create a Post
+            </Link>
+          )}
         </div>
       </div>
 
