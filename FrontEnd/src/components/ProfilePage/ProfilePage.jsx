@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { thunkGetUserPosts } from '../../redux/post';
 import { Link } from 'react-router-dom';
 import { FaRegCompass, FaPlus } from 'react-icons/fa';
 import FollowsModal from '../FollowsModal/FollowsModal';
+import DeletePostModal from './DeletePostModal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const [showFollowsModal, setShowFollowsModal] = useState(false);
     const [followsModalType, setFollowsModalType] = useState('followers');
 
     const userPosts = useSelector(state => Object.values(state.posts));
     const currentUser = useSelector(state => state.session?.user);
+
+    // This is for the delete button
+    const toggleDelete = (e) => {
+    e.stopPropagation();
+    };
 
     useEffect(() => {
         if (currentUser) {
@@ -48,7 +55,7 @@ const ProfilePage = () => {
         bio,
         followers_count = 0,
         following_count = 0,
-        followersCount = 0, 
+        followersCount = 0,
         followingCount = 0
     } = currentUser;
 
@@ -154,6 +161,24 @@ const ProfilePage = () => {
                                         />
                                     )}
                                     <p>{post.post_body}</p>
+                                    {/* Adding edit and delete button START */}
+                                        <ul>
+                                            <li>
+                                            <Link to={`${post.id}/edit`} className="newSpotLink">
+                                                Update
+                                            </Link>
+                                            </li>
+                                            <li>
+                                            <div onClick={toggleDelete}>
+                                                <OpenModalButton
+                                                buttonText="Delete"
+                                                className="newSpotLink"
+                                                modalComponent={<DeletePostModal className="newSpotLink" spotId={post.id}/>}
+                                                />
+                                            </div>
+                                            </li>
+                                        </ul>
+                                    {/* Edit and delete buttons END */}
                                 </div>
                             ))}
                     </div>

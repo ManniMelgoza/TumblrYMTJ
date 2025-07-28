@@ -5,8 +5,8 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_POSTS = 'posts/getAllPosts';
 const CREATE_POST = 'posts/createPost';
 const GET_USER_POSTS = 'posts/getUserPosts';
-// const EDIT_POST = 'posts/editPost';
-// const DELETE_POST = 'posts/deletePost';
+const EDIT_POST = 'posts/editPost';
+const DELETE_POST = 'posts/deletePost';
 
 // *********************************
 //   ACTIONS CREATOR
@@ -26,15 +26,15 @@ const getUserPosts = (posts) => ({
     payload: posts
 });
 
-// const editPost = (editPost) => ({
-//     type: EDIT_POST,
-//     payload: editPost
-// });
+const editPost = (editPost) => ({
+    type: EDIT_POST,
+    payload: editPost
+});
 
-// const deletePost = (post_id) => ({
-//     type: DELETE_POST,
-//     payload: post_id
-// });
+const deletePost = (post_id) => ({
+    type: DELETE_POST,
+    payload: post_id
+});
 
 // *********************************
 //   THUNKS
@@ -122,46 +122,51 @@ export const thunkGetUserPosts = () => async (dispatch) => {
     }
 };
 
-// export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
+export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
-//     try{
-//         const response = await fetch(`api/posts/${post_id}}/edit`, {
-//             method: "PUT",
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify(postEdit)
-//         });
-//         if (response.ok) {
-//             const editPostData = await response.json();
-//             dispatch(editPost(editPostData))
-//         } else {
-//             const error = await response.json();
-//             return { error: error.errors  || ["Unable to edit post"] };
-//         }
+    try{
+        const response = await fetch(`api/posts/${post_id}}/edit`, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postEdit)
+        });
+        if (response.ok) {
+            const editPostData = await response.json();
+            dispatch(editPost(editPostData))
+        } else {
+            const error = await response.json();
+            return { error: error.errors  || ["Unable to edit post"] };
+        }
 
-//     } catch (err) {
-//         console.error("Error editing post", err);
-//         return { 'error': 'Unable to edit post' }
-//     }
-// };
+    } catch (err) {
+        console.error("Error editing post", err);
+        return { 'error': 'Unable to edit post' }
+    }
+};
 
-// export const thinkDeletePost = (post_id) => async (dispatch) => {
+export const thunkDeletePost = (post_id) => async (dispatch) => {
+    try {
+        // Fixed: Added leading slash and used csrfFetch for proper authentication
+        const response = await csrfFetch(`/api/posts/${post_id}`, {
+            method: 'DELETE'
+        });
 
-//     try {
-//         const response = await fetch (`api/posts/${post_id}`,{
-//             method: 'DELETE'
-//         });
-//         if (response.ok) {
-//             dispatch(deletePost(post_id))
-//             return deletePost;
-//         } else {
-//             const error = await response.json();
-//             return { error: error.errors || ['Unable to delete post'] }
-//         }
-//     } catch (err) {
-//         console.error('Error deleting post', err);
-//         return { 'error': 'mable to delete post' }
-//     }
-// };
+        if (response.ok) {
+            // Fixed: Dispatch with post_id, not the action creator function
+            dispatch(deletePost(post_id));
+
+            // Return success response
+            const result = await response.json();
+            return result;
+        } else {
+            const error = await response.json();
+            return { error: error.errors || ['Unable to delete post'] };
+        }
+    } catch (err) {
+        console.error('Error deleting post', err);
+        return { error: 'Unable to delete post' }; // Fixed typo: was 'mable'
+    }
+};
 
 // *********************************
 //   REDUCERS
@@ -187,14 +192,14 @@ function postsReducer(state = initialState, action) {
             });
             return newState;
         }
-        // case EDIT_POST:{
-        //     return { ...state, [action.payload.id]: action.payload };
-        // }
-        // case DELETE_POST: {
-        //     const newState = { ...state };
-        //     delete newState[action.payload.id];
-        //     return newState;
-        // }
+        case EDIT_POST:{
+            return { ...state, [action.payload.id]: action.payload };
+        }
+        case DELETE_POST: {
+            const newState = { ...state };
+            delete newState[action.payload];
+            return newState;
+        }
         default:
             return state;
     }

@@ -441,3 +441,16 @@
 .btn-submit:hover {
     background-color: #1e7e34;
 }
+
+/* this if for the delete and edit button stuff */
+.newSpotLink {
+    background-color: rgb(54, 153, 210);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+   /* display: grid; */
+    /* grid-template-columns: repeat(2, 1fr); */
+}
