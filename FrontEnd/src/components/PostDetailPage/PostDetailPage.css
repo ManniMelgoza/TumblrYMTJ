@@ -174,3 +174,19 @@ html, body, ul {
    /* display: grid; */
     /* grid-template-columns: repeat(2, 1fr); */
 }
+
+.delete-post-button {
+  background-color: rgb(220, 53, 69); 
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.delete-post-button:hover {
+  background-color: rgb(200, 35, 51);
+}

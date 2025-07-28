@@ -21,7 +21,7 @@ const ProfilePage = () => {
         dispatch(thunkGetUserPosts());
     }, [dispatch]);
 
-    const { username, bio, followersCount = 0, followingCount = 0 } = user || {};
+    const { username, bio, followers_count = 0, following_count = 0 } = user || {};
     const avatarLetter = username?.charAt(0).toUpperCase() || 'U';
     const postsCount = userPosts.length;
 
@@ -89,7 +89,7 @@ const ProfilePage = () => {
                                 onClick={handleFollowersClick}
                                 type="button"
                             >
-                                <span className="stat-number">{followersCount}</span>
+                                <span className="stat-number">{followers_count}</span>
                                 <span className="stat-label">followers</span>
                             </button>
                             <button
@@ -97,7 +97,7 @@ const ProfilePage = () => {
                                 onClick={handleFollowingClick}
                                 type="button"
                             >
-                                <span className="stat-number">{followingCount}</span>
+                                <span className="stat-number">{following_count}</span>
                                 <span className="stat-label">following</span>
                             </button>
                         </div>
