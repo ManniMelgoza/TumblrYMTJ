@@ -37,20 +37,10 @@ export const router = createBrowserRouter([
         path: "/create",
         element: <PostFormModal />
       },
-<<<<<<< HEAD
-// Profile page
-// JACOB if you want to repupose this seciton for the profilePage
-      // {
-      //   path: "/profile",
-      //   element: <OwnerPostPage />
-      // }
-
-=======
       {
         path: "/profile",
-        element: <ProfilePage /> 
+        element: <ProfilePage />
       }
->>>>>>> dev
     ],
   },
 ]);

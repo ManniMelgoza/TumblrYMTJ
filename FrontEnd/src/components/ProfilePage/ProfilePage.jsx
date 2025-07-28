@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkGetUserPosts } from '../redux/posts';
+import { thunkGetUserPosts } from '../../redux/post';
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
