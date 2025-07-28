@@ -1,0 +1,48 @@
+.comments-section {
+    background-color:transparent;
+    padding: 20px;
+    max-width: 900px;   /* fill width */
+    min-height: 100vh; /* fill vertical space if you want */
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  .comments-list {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  
+  .comment {
+    background-color: white;
+    color: black;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .comment p {
+    margin: 4px 0;
+  }
+  
+  /* Style username differently */
+  .comment p:nth-child(2) {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Comment form styles */
+  .comment-form {
+    width: 100%;
+  }
+  
+  .comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1p
+  }  

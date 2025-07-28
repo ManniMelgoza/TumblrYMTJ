@@ -1,19 +1,17 @@
-// import { NavLink } from "react-router-dom";
-import ProfileButton from "./ProfileButton";
-import "./Navigation.css";
+// src/components/Navigation/Navigation.jsx
+import ProfileButton from '../Navigation/ProfileButton';
+import './Navigation.css';
 
-function Navigation() {
+const Navigation = () => {
   return (
-      <ul>
-      {/* <li>
-        <NavLink to="/">Home</NavLink>
-      </li> */}
-
-      <li style={{ listStyleType: "none" }}>
+    <nav className="navigation">
+      <div className="nav-content">
+        <div className="spacer" />
         <ProfileButton />
-      </li>
-    </ul>
+      </div>
+    </nav>
   );
-}
+};
 
 export default Navigation;
+

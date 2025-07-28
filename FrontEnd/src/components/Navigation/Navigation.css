@@ -1,7 +1,19 @@
-.profile-dropdown {
-  position: absolute;
+/* Navigation.css */
+
+.navigation {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent; /* removes white background */
+  padding: 10px 20px;
 }
 
-li {
-  list-style-type: none;
+.nav-content {
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex-grow: 1;
 }

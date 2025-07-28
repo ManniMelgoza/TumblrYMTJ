@@ -42,6 +42,7 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     closeMenu();
+    navigate('/');
   };
 
 
@@ -54,10 +55,12 @@ function ProfileButton() {
       {/* <button onClick={toggleMenu}>
         <FaUserCircle />
       </button> */}
-      <div className='profile-container'>
+      <div className="profile-button-wrapper">
       <button onClick={toggleMenu} className='profile-button'>
         <FaUserCircle />
       </button>
+      </div>
+     
 
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
@@ -65,31 +68,42 @@ function ProfileButton() {
             <>
               <li>
                 {/* TODO PICK UP HERE */}
+                <div className="dropdown-item">
                 <button onClick={goToProfile}>{ user.username }</button>
                 {/* <Link className="" to="/profile"> { user.username } </Link> */}
+                </div>
               </li>
-              <li>{user.email}</li>
+              <li><div className="dropdown-item">{user.email}</div></li>
               <li>
+                <div className="dropdown-item">
                 <button onClick={logout}>Log Out</button>
+                </div>
               </li>
             </>
           ) : (
             <>
+            <li>
+              <div className="dropdown-item">
               <OpenModalMenuItem
                 itemText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
+              </div>
+              </li>
+              <li>
+                <div className="dropdown-item">
               <OpenModalMenuItem
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
+              </div>
+              </li>
             </>
           )}
         </ul>
       )}
-      </div>
     </>
   );
 }

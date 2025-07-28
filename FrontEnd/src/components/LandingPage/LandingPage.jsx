@@ -95,7 +95,9 @@ import { useEffect } from "react";
 import { FaRegCompass } from "react-icons/fa";
 //import Likebutton from "../LikeButton"; //added by tj
 import PostCard from "../PostCard/PostCard"; //added by tj
-
+import Layout from "../Layout/Layout";
+import Sidebar from "../Sidebar/Sidebar";
+import './LandingPage.css'; 
 
 const LandingPage = () => {
     const dispatch = useDispatch();
@@ -123,25 +125,7 @@ const LandingPage = () => {
         <>
             <div className="landing-container">
                 {/* Sidebar */}
-                <div className="logoColumn">
-                    <div className="logoWrapper">
-                        <div className="logoImg">
-                        <img src="ReelQuotesLogo.gif" alt="Logo" />
-                        </div>
-                    </div>
-
-                    <div className="navButtons">
-
-                        <Link to="/" className="newSpotLink">
-                        <FaRegCompass /> Explore
-                        </Link>
-                        {loggedUser && (
-                            <Link to="/create" className="newSpotLink">
-                                Create a Post
-                            </Link>
-                        )}
-                    </div>
-                    </div>
+                <Sidebar />
 
                 {/* Main Content */}
                 <div className="main-content">

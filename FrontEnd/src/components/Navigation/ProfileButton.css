@@ -1,55 +1,74 @@
-.profile-container {
-    position: fixed;        /* Fixed to viewport */
+/* Wrapper to fix the profile button at top-right */
+.profile-button-wrapper {
+    position: fixed;
     top: 20px;
-    right: 20px;
-    z-index: 1000;          /* Ensure it floats above other elements */
-}
-
-.profile-button {
+    right: 40px;
+    z-index: 1000; /* Make sure it stays on top */
+  }
+  
+  /* Profile icon button styles */
+  .profile-button {
+    font-size: 60px;
     background: none;
-    border: 2px solid black;
-    border-radius: 50px;
-    padding: 10px 12px;
-    font-size: 30px;
+    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  }
 
-.profile-button:hover {
-    background-color: rgb(64,184,255);
-}
-
-.profile-dropdown {
+  .profile-button:hover {
+    background-color: whitesmoke;
+    border-radius: 20%;
+  }
+  
+  /* Dropdown menu container */
+  .profile-dropdown {
+    font-family: Arial, Helvetica, sans-serif;
     position: absolute;
-    right: 0;
-    /* margin-top: 10px; */
-    /* background-color: rgb(52, 155, 214); */
-    /* border: 1px solid #ddd; */
+    top: 80px; /* Adjust vertical offset so dropdown appears below the button */
+    right: 100px;
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
-    list-style-type: none;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    z-index: 1001; /* Above the button */
+  }
+  
+  /* Remove default li padding/margin */
+  .profile-dropdown li {
     padding: 0;
-    width: 180px;
-}
-
-.profile-dropdown li {
-    padding: 15px;
+    margin: 0;
+  }
+  
+  /* Dropdown item wrapper for hover effect */
+  .dropdown-item {
+    background-color: transparent;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-}
-
-/* This is for the hover selection on the drop down when selection log in or signup */
-.profile-dropdown li:hover {
-    background-color: rgb(52, 155, 214);
-}
-
-.profile-dropdown button {
+    border-radius: 6px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* Hover bubble effect */
+  .dropdown-item:hover {
+    background-color: white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Buttons inside dropdown items */
+  .dropdown-item button {
     background: none;
     border: none;
+    font: inherit;
+    cursor: pointer;
     width: 100%;
     text-align: left;
-    font: inherit;
-    /* padding: 10px 0; */
-    cursor: pointer;
-}
+   
+    padding: 0; /* remove default button padding */
+  }
+  

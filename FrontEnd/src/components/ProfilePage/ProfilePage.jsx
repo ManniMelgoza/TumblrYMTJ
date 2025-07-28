@@ -24,45 +24,13 @@ const ProfilePage = () => {
     };
 
     useEffect(() => {
-        if (currentUser) {
-            dispatch(thunkGetUserPosts(currentUser.id));
+        if (currentUser) { // in incoming it was (userId)
+        dispatch(thunkGetUserPosts(currentUser.id)); // no argument inside thunk
         }
-    }, [dispatch, currentUser]);
+    }, [dispatch, currentUser]); // currentUser was not after dispatch
 
-    if (!currentUser) {
-        return (
-            <div className="profile-layout">
-                <div className="left-section">
-                    <div className="logoImg">
-                        <img src="ReelQuotesLogo.gif" alt="Logo" />
-                    </div>
-                    <nav className="nav-buttons">
-                        <Link to="/" className="nav-link explorer-btn">
-                            <FaRegCompass className="nav-icon" />
-                            <span>Explore</span>
-                        </Link>
-                    </nav>
-                </div>
-                <div className="main-content">
-                    <div className="error">Please log in to view your profile</div>
-                </div>
-            </div>
-        );
-    }
-
-    const {
-        username,
-        bio,
-        followers_count = 0,
-        following_count = 0,
-        followersCount = 0,
-        followingCount = 0,
-    } = currentUser;
-
-    const actualFollowersCount = followers_count || followersCount;
-    const actualFollowingCount = following_count || followingCount;
-
-    const avatarLetter = username?.charAt(0).toUpperCase() || "U";
+    const { username, bio, followers_count = 0, following_count = 0 } = user || {};
+    const avatarLetter = username?.charAt(0).toUpperCase() || 'U';
     const postsCount = userPosts.length;
 
     const handleFollowersClick = () => {

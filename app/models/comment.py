@@ -30,6 +30,7 @@ class Comment(db.Model, TimeStampMixin):
             'user_id': self.user_id,
             'post_id': self.post_id,
             'comment_body': self.comment_body,
-            # TJ LOOK AT THIS BELOW: 
-            'username': self.user.username if self.user else None # extracting just the username from our Users table to attach to the response body 
+            'username': self.user.username if self.user else None, # extracting just the username from our Users table to attach to the response body 
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }

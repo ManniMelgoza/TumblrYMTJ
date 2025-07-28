@@ -1,0 +1,14 @@
+/* Layout.css */
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    position: relative;
+    padding: 0; /* remove padding if you don't want the white space */
+    background: transparent; /* removes white background */
+  }
+  

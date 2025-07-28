@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { thunkGetAllPosts } from "../../redux/post";
 import Comments from "../Comments/Comments"; 
 import "./PostDetailPage.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 const PostDetailPage = () => {
   const { postId } = useParams();
@@ -41,7 +42,8 @@ const PostDetailPage = () => {
   return (
     <div className="landing-container">
       {/* Sidebar first - same order as landing page */}
-      <div className="logoColumn">
+      <Sidebar />
+      {/* <div className="logoColumn">
         <div className="logoWrapper">
           <div className="logoImg">
             <img src="ReelQuotesLogo.gif" alt="Logo" />
@@ -58,7 +60,7 @@ const PostDetailPage = () => {
             </Link>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Main content second - same order as landing page */}
       <div className="main-content">
@@ -66,6 +68,7 @@ const PostDetailPage = () => {
         <img src={post?.post_img_url} alt={post?.post_title} />
         <p>{post?.post_body}</p>
         <LikeButton postId={post?.id} />
+        <Comments postId={post?.id} />
       </div>
     </div>
   );

@@ -112,7 +112,7 @@ def delete_post(post_id):
 
 # full endpoint : 'api/posts/<int:postID>/comments'
 # no user auth to view all comments
-@comment_routes.route('/<int:postId>/comments', methods=["GET"]) # our endpoint is the postId number and the retrieval method is `GET`
+@post_routes.route('/<int:postId>/comments', methods=["GET"]) # our endpoint is the postId number and the retrieval method is `GET`
 def all_comments(postId): # we begin a function that will retrieve all comments attached to a post by its postId
     """
     View all comments on a post
@@ -131,7 +131,7 @@ def all_comments(postId): # we begin a function that will retrieve all comments 
 
 # full endpoint : 'api/posts/<int:postId>/comment'
 # user must be logged in and authenticated to create a comment on a post
-@comment_routes.route('/<int:postId>/comments', methods=['POST']) # creating a url with the method POST to post a comment
+@post_routes.route('/<int:postId>/comments', methods=['POST']) # creating a url with the method POST to post a comment
 @login_required # we require an authenticated user to create a comment
 def create_comment(postId): # defining our function name which requires a postId to be passed in as an argument
     """
