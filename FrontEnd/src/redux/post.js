@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf";
 // **********************************
 const GET_ALL_POSTS = 'posts/getAllPosts';
 const CREATE_POST = 'posts/createPost';
-const GET_USER_POSTS = 'posts/getUserPosts'; 
+const GET_USER_POSTS = 'posts/getUserPosts';
 // const EDIT_POST = 'posts/editPost';
 // const DELETE_POST = 'posts/deletePost';
 
@@ -24,7 +24,7 @@ const createPost = (newPost) => ({
 const getUserPosts = (posts) => ({
     type: GET_USER_POSTS,
     payload: posts
-}); 
+});
 
 // const editPost = (editPost) => ({
 //     type: EDIT_POST,
@@ -62,42 +62,65 @@ export const thunkGetAllPosts = () =>  async (dispatch) => {
     }
 };
 
-export const thunkCreatePost = () => async (dispatch) => {
+// export const thunkCreatePost = () => async (dispatch) => {
 
+//     try {
+//         const response = await fetch("api/posts/create");
+//             if (response.ok) {
+//                 const createSpotData = await response.json();
+//                 dispatch(createPost(createSpotData));
+//                 return createSpotData;
+//             }
+//             else{
+//                 const error = await response.json();
+//                 return { error: error.errors || ["Not able to create post"] };
+//             }
+//         } catch (err) {
+//             console.error('Error creating post', err);
+//             return { "error": "Unable to create the post"}
+//     }
+// };
+
+
+export const thunkCreatePost = (postData) => async (dispatch) => {
     try {
-        const response = await fetch("api/posts/create");
-            if (response.ok) {
-                const createSpotData = await response.json();
-                dispatch(createPost(createSpotData));
-                return createSpotData;
-            }
-            else{
-                const error = await response.json();
-                return { error: error.errors || ["Not able to create post"] };
-            }
-        } catch (err) {
-            console.error('Error creating post', err);
-            return { "error": "Unable to create the post"}
+        const response = await csrfFetch("/api/posts/create", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        });
+
+        if (response.ok) {
+            const newPostData = await response.json();
+            dispatch(createPost(newPostData));
+            return newPostData;
+        } else {
+            const error = await response.json();
+            return { error: error.errors || ["Not able to create post"] };
+        }
+    } catch (err) {
+        console.error('Error creating post', err);
+        return { "error": "Unable to create the post" };
     }
 };
 
 export const thunkGetUserPosts = () => async (dispatch) => {
     try {
-        const response = await csrfFetch('/api/posts/current'); 
+        const response = await csrfFetch('/api/posts/current');
 
         if (response.ok) {
             const data = await response.json(); // { Posts: [our posts]}
-            dispatch(getUserPosts(data.Posts)); 
+            dispatch(getUserPosts(data.Posts));
             return data;
         } else {
-            const error = await response.json(); 
-            return { error: error.errors || ['Unable to fetch your posts'] }; 
+            const error = await response.json();
+            return { error: error.errors || ['Unable to fetch your posts'] };
         }
     } catch (err) {
-        console.error("Error fetching current user's posts", err); 
-        return { error: "Something went wrong while fetching your posts" }; 
+        console.error("Error fetching current user's posts", err);
+        return { error: "Something went wrong while fetching your posts" };
     }
-}; 
+};
 
 // export const thunkEditPost = (post_id, postEdit) => async (dispatch) => {
 
@@ -149,7 +172,7 @@ function postsReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_POSTS: {
             const newState = {};
-            action.payload.forEach((post) => (newState[post.id] = post)); // the purple parantheses may have to be curly braces 
+            action.payload.forEach((post) => (newState[post.id] = post)); // the purple parantheses may have to be curly braces
             return newState;
         }
         case CREATE_POST: {
@@ -158,11 +181,11 @@ function postsReducer(state = initialState, action) {
             return newState;
         }
         case GET_USER_POSTS: {
-            const newState = {}; 
+            const newState = {};
             action.payload.forEach((post) => {
-                newState[post.id] = post; 
-            }); 
-            return newState; 
+                newState[post.id] = post;
+            });
+            return newState;
         }
         // case EDIT_POST:{
         //     return { ...state, [action.payload.id]: action.payload };

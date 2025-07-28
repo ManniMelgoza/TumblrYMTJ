@@ -1,0 +1,122 @@
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 45vh;
+    overflow-y: auto;
+    margin: 0 auto; /* Center the modal */
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.modal-content label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    gap: 5px;
+    width: 100%;
+    /* Removed padding-left: 250px; for better centering */
+}
+
+.modal-content input,
+.modal-content textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Center the buttons */
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 100px; /* Ensure buttons have consistent width */
+}
+
+.modal-buttons button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-buttons button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.8;
+}
+
+.create-post-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.create-post-btn:hover {
+    background-color: #218838;
+}
+
+/* Additional styles for better layout when modal is within landing-container */
+.landing-container .modal-content {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .modal-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .modal-buttons button {
+        width: 100%;
+        max-width: 200px;
+    }
+}
