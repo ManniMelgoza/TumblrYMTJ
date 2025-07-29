@@ -1,7 +1,7 @@
 """create_tables
 
 Revision ID: 829f9c5f5aee
-Revises: 
+Revises:
 Create Date: 2025-07-28 13:42:31.236158
 
 """
@@ -103,7 +103,7 @@ def downgrade():
         # Development (SQLite): Use batch_alter_table
         with op.batch_alter_table('likes') as batch_op:
             batch_op.drop_constraint('unique_user_like')
-            
+
     op.drop_table('likes')
     op.drop_table('comments')
     op.drop_table('posts')
