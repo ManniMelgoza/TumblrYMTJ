@@ -185,6 +185,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetUserPosts } from "../../redux/post";
+// import { followUser, unfollowUser} from "../../redux/follow";
 import { Link } from "react-router-dom";
 import { FaRegCompass, FaPlus } from "react-icons/fa";
 import FollowsModal from "../FollowsModal/FollowsModal";
@@ -257,6 +258,14 @@ const ProfilePage = () => {
         setFollowsModalType("following");
         setShowFollowsModal(true);
     };
+
+//     const handleFollow = () => {
+//         dispatch(followUser(userId));
+// };
+
+//     const handleUnfollow = () => {
+//         dispatch(unfollowUser(userId));
+// };
 
     return (
         <div className="profile-layout">

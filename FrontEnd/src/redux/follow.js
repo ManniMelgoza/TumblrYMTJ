@@ -14,6 +14,17 @@ export const loadFollowing = (following) => ({
     following
 });
 
+export const addFollow = (follow) => ({
+    type: ADD_FOLLOW,
+    follow
+}); 
+
+export const removeFollow = (follow) => ({
+    type: REMOVE_FOLLOW, 
+    follow
+}); 
+
+
 // Thunk Actions
 export const getFollowers = (userId) => async (dispatch) => {
     const response = await fetch(`/api/follows/${userId}/followers`);
@@ -32,7 +43,7 @@ export const getFollowing = (userId) => async (dispatch) => {
 }
 
 export const followUser = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/follows/${userId}`, {
+    const response = await fetch(`/api/follows/${userId}/following`, { // did not match backend route added /following ater userId
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -40,7 +51,20 @@ export const followUser = (userId) => async (dispatch) => {
     });
     if (response.ok) {
         const follow = await response.json();
-        dispatch({ type: ADD_FOLLOW, follow });
+        dispatch(addFollow(follow));
+    }
+}
+
+export const unfollowUser = (userId) => async (dispatch) => {
+    const response = await fetch(`/api/follows/${userId}/following/unfollow`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }); 
+    if (response.ok) {
+        const follow = await response.json();
+        dispatch(removeFollow(follow)); 
     }
 }
 
@@ -70,13 +94,15 @@ const followReducer = (state = initialState, action) => {
                     [action.follow.id]: action.follow
                 }
             };
-        case REMOVE_FOLLOW:
+        case REMOVE_FOLLOW: {
             const newFollowing = { ...state.following };
             delete newFollowing[action.follow.id];
             return {
                 ...state,
                 following: newFollowing
+
             };
+            }
         default:
             return state;
     }
