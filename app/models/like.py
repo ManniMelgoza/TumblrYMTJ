@@ -3,24 +3,6 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 class Like(db.Model):
     __tablename__ = 'likes'#we can change the name if we need to
 
-    #adding boolean to account for env
-    if environment == "production":
-        __table_args__ = (
-            {'schema': SCHEMA},
-            db.UniqueConstraint(
-                'user_id', 
-                'post_id', 
-                name='unique_user_like'
-            )
-        )
-    else:
-        __table_args__ = (
-            db.UniqueConstraint(
-                'user_id', 
-                'post_id', 
-                name='unique_user_like'
-            ),
-        )
 
     #ids
     id = db.Column(db.Integer, primary_key=True)
@@ -37,4 +19,22 @@ class Like(db.Model):
             "user_id": self.user_id,
             "post_id": self.post_id
         }
-    
+
+#adding boolean to account for env
+    if environment == "production":
+        __table_args__ = (
+            {'schema': SCHEMA},
+            db.UniqueConstraint(
+                'user_id',
+                'post_id',
+                name='unique_user_like'
+            )
+        )
+    else:
+        __table_args__ = (
+            db.UniqueConstraint(
+                'user_id',
+                'post_id',
+                name='unique_user_like'
+            ),
+        )
